@@ -2,58 +2,39 @@ package BUS;
 
 import DAO.HeDieuHanhDAO;
 import DTO.ThuocTinhSanPham.HeDieuHanhDTO;
-import java.util.ArrayList;
 
 /**
  *
  * @author 84907
  */
-public class HeDieuHanhBUS {
-
-    private HeDieuHanhDAO hdhDAO = new HeDieuHanhDAO();
-    private ArrayList<HeDieuHanhDTO> listHeDieuHanh = new ArrayList<>();
-
+public class HeDieuHanhBUS extends BaseBUS<HeDieuHanhDTO>{
     public HeDieuHanhBUS() {
-        this.listHeDieuHanh = hdhDAO.selectAll();
-    }
-
-    public ArrayList<HeDieuHanhDTO> getAll() {
-        return this.listHeDieuHanh;
+        super(new HeDieuHanhDAO());
     }
 
     public String[] getArrTenHeDieuHanh() {
-        String[] result = new String[listHeDieuHanh.size()];
-        for (int i = 0; i < listHeDieuHanh.size(); i++) {
-            result[i] = listHeDieuHanh.get(i).getTenhdh();
+        String[] result = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i).getTenhdh();
         }
         return result;
     }
 
-    public HeDieuHanhDTO getByIndex(int index) {
-        return this.listHeDieuHanh.get(index);
-    }
-
-    public boolean add(HeDieuHanhDTO hdh) {
-        boolean check = hdhDAO.insert(hdh) != 0;
+    @Override
+    public boolean delete(HeDieuHanhDTO hdh) {
+        boolean check = DAO.delete(Integer.toString(hdh.getMahdh())) != 0;
         if (check) {
-            this.listHeDieuHanh.add(hdh);
+            list.remove(hdh);
         }
         return check;
     }
 
-    public boolean delete(HeDieuHanhDTO hdh, int index) {
-        boolean check = hdhDAO.delete(Integer.toString(hdh.getMahdh())) != 0;
-        if (check) {
-            this.listHeDieuHanh.remove(index);
-        }
-        return check;
-    }
-
-    public int getIndexByMaMau(int mamau) {
+    @Override
+    public int getIndexByCode(int mamau) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listHeDieuHanh.size() && vitri == -1) {
-            if (listHeDieuHanh.get(i).getMahdh() == mamau) {
+        while (i < this.list.size() && vitri == -1) {
+            if (list.get(i).getMahdh() == mamau) {
                 vitri = i;
             } else {
                 i++;
@@ -63,14 +44,15 @@ public class HeDieuHanhBUS {
     }
 
     public String getTenHdh(int mahdh) {
-        int index = this.getIndexByMaMau(mahdh);
-        return this.listHeDieuHanh.get(index).getTenhdh();
+        int index = this.getIndexByCode(mahdh);
+        return this.list.get(index).getTenhdh();
     }
 
+    @Override
     public boolean update(HeDieuHanhDTO hdh) {
-        boolean check = hdhDAO.update(hdh) != 0;
+        boolean check = DAO.update(hdh) != 0;
         if (check) {
-            this.listHeDieuHanh.set(getIndexByMaMau(hdh.getMahdh()), hdh);
+            list.set(getIndexByCode(hdh.getMahdh()), hdh);
         }
         return check;
     }
@@ -78,12 +60,11 @@ public class HeDieuHanhBUS {
     public boolean checkDup(String name) {
         boolean check = true;
         int i = 0;
-        while (i <= this.listHeDieuHanh.size() && check == true) {
-            if (this.listHeDieuHanh.get(i).getTenhdh().toLowerCase().contains(name.toLowerCase())) {
+        while (i < list.size() && check == true) {
+            if (list.get(i).getTenhdh().toLowerCase().contains(name.toLowerCase())) {
                 check = false;
-            } else {
-                i++;
             }
+            else i++;
         }
         return check;
     }

@@ -5,43 +5,34 @@ import DTO.PhienBanSanPhamDTO;
 import DTO.SanPhamDTO;
 import java.util.ArrayList;
 
-public class SanPhamBUS {
+public class SanPhamBUS extends BaseBUS<SanPhamDTO>{
 
     public final SanPhamDAO spDAO = new SanPhamDAO();
     public PhienBanSanPhamBUS cauhinhBus = new PhienBanSanPhamBUS();
-    private ArrayList<SanPhamDTO> listSP = new ArrayList<>();
 
     public SanPhamBUS() {
-        listSP = spDAO.selectAll();
+        super(new SanPhamDAO());
     }
-
-    public ArrayList<SanPhamDTO> getAll() {
-        
-        return this.listSP;
-    }
-
-    public SanPhamDTO getByIndex(int index) {
-        return this.listSP.get(index);
-    }
-
+    
     public SanPhamDTO getByMaSP(int masp) {
         int vitri = -1;
         int i = 0;
-        while (i <= this.listSP.size() && vitri == -1) {
-            if (this.listSP.get(i).getMasp() == masp) {
+        while (i <= this.list.size() && vitri == -1) {
+            if (this.list.get(i).getMasp() == masp) {
                 vitri = i;
             } else {
                 i++;
             }
         }
-        return this.listSP.get(vitri);
+        return this.list.get(vitri);
     }
 
-    public int getIndexByMaSP(int masanpham) {
+    @Override
+    public int getIndexByCode(int masanpham) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listSP.size() && vitri == -1) {
-            if (listSP.get(i).getMasp() == masanpham) {
+        while (i < this.list.size() && vitri == -1) {
+            if (list.get(i).getMasp() == masanpham) {
                 vitri = i;
             } else {
                 i++;
@@ -50,34 +41,41 @@ public class SanPhamBUS {
         return vitri;
     }
 
-    public Boolean add(SanPhamDTO lh, ArrayList<PhienBanSanPhamDTO> listch) {
+    @Override
+    public boolean add(SanPhamDTO lh){
+        throw new RuntimeException("use Func add with 2 para instead");
+    }
+
+    public boolean add(SanPhamDTO lh, ArrayList<PhienBanSanPhamDTO> listch) {
         boolean check = spDAO.insert(lh) != 0;
         if (check) {
             cauhinhBus.add(listch);
-            this.listSP.add(lh);
+            this.list.add(lh);
         }
         return check;
     }
 
-    public Boolean delete(SanPhamDTO lh) {
+    @Override
+    public boolean delete(SanPhamDTO lh) {
         boolean check = spDAO.delete(Integer.toString(lh.getMasp())) != 0;
         if (check) {
-            this.listSP.remove(lh);
+            this.list.remove(lh);
         }
         return check;
     }
 
-    public Boolean update(SanPhamDTO lh) {
+    @Override
+    public boolean update(SanPhamDTO lh) {
         boolean check = spDAO.update(lh) != 0;
         if (check) {
-            this.listSP.set(getIndexByMaSP(lh.getMasp()), lh);
+            this.list.set(getIndexByCode(lh.getMasp()), lh);
         }
         return check;
     }
 
     public ArrayList<SanPhamDTO> getByMakhuvuc(int makv) {
         ArrayList<SanPhamDTO> result = new ArrayList<>();
-        for (SanPhamDTO i : this.listSP) {
+        for (SanPhamDTO i : this.list) {
             if (i.getKhuvuckho() == makv) {
                 result.add(i);
             }
@@ -88,7 +86,7 @@ public class SanPhamBUS {
     public ArrayList<SanPhamDTO> search(String text) {
         text = text.toLowerCase();
         ArrayList<SanPhamDTO> result = new ArrayList<>();
-        for (SanPhamDTO i : this.listSP) {
+        for (SanPhamDTO i : this.list) {
             if (Integer.toString(i.getMasp()).toLowerCase().contains(text) || i.getTensp().toLowerCase().contains(text)) {
                 result.add(i);
             }
@@ -101,9 +99,8 @@ public class SanPhamBUS {
     }
 
     public int getQuantity() {
-        ArrayList<SanPhamDTO> result = new ArrayList<>();
         int n = 0;
-        for(SanPhamDTO i : this.listSP) {
+        for(SanPhamDTO i : this.list) {
             if (i.getSoluongton() != 0) {
                 n += i.getSoluongton();
             }

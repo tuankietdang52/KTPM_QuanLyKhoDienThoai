@@ -6,37 +6,26 @@ package BUS;
 
 import DAO.DungLuongRamDAO;
 import DTO.ThuocTinhSanPham.DungLuongRamDTO;
-import java.util.ArrayList;
 
 /**
  *
  * @author Tran Nhat Sinh
  */
-public class DungLuongRamBUS {
-    private final DungLuongRamDAO dlramDAO = new DungLuongRamDAO();
-    private ArrayList<DungLuongRamDTO> listDLRam = new ArrayList<>();
-
+public class DungLuongRamBUS extends BaseBUS<DungLuongRamDTO> {
     public DungLuongRamBUS getInstance() {
         return new DungLuongRamBUS();
     }
     
     public DungLuongRamBUS() {
-        listDLRam = dlramDAO.selectAll();
+        super(new DungLuongRamDAO());
     }
 
-    public ArrayList<DungLuongRamDTO> getAll() {
-        return this.listDLRam;
-    }
-
-    public DungLuongRamDTO getByIndex(int index) {
-        return this.listDLRam.get(index);
-    }
-
-    public int getIndexByMaRam(int maram) {
+    @Override
+    public int getIndexByCode(int maram) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listDLRam.size() && vitri == -1) {
-            if (listDLRam.get(i).getMadlram()== maram) {
+        while (i < this.list.size() && vitri == -1) {
+            if (list.get(i).getMadlram()== maram) {
                 vitri = i;
             } else {
                 i++;
@@ -45,60 +34,44 @@ public class DungLuongRamBUS {
         return vitri;
     }
 
-    public boolean add(DungLuongRamDTO dlram) {
-        boolean check = dlramDAO.insert(dlram) != 0;
+    @Override
+    public boolean delete(DungLuongRamDTO dlram) {
+        boolean check = DAO.delete(Integer.toString(dlram.getMadlram())) != 0;
         if (check) {
-            this.listDLRam.add(dlram);
+            list.remove(dlram);
         }
         return check;
     }
 
-    public boolean delete(DungLuongRamDTO dlram, int index) {
-        boolean check = dlramDAO.delete(Integer.toString(dlram.getMadlram())) != 0;
-        if (check) {
-            this.listDLRam.remove(index);
-        }
-        return check;
-    }
-
+    @Override
     public boolean update(DungLuongRamDTO dlram) {
-        boolean check = dlramDAO.update(dlram) != 0;
+        boolean check = DAO.update(dlram) != 0;
         if (check) {
-            this.listDLRam.set(getIndexById(dlram.getMadlram()), dlram);
+            this.list.set(getIndexByCode(dlram.getMadlram()), dlram);
         }
         return check;
-    }
-
-    public int getIndexById(int madlram) {
-        int i = 0;
-        int vitri = -1;
-        while (i < this.listDLRam.size() && vitri == -1) {
-            if (listDLRam.get(i).getMadlram()== madlram) {
-                vitri = i;
-            } else i++;
-        }
-        return vitri;
     }
     
     public boolean checkDup(int dl) {
         boolean check = true;
         int i = 0;
-        while(i <= this.listDLRam.size() && check == true) {
-            if(this.listDLRam.get(i).getDungluongram()==dl) {
+        while(i < list.size() && check == true) {
+            if (list.get(i).getDungluongram() == dl) {
                 check = false;
-            } else i++;
+            } 
+            else i++;
         }
         return check;
     }
     
     public int getKichThuocById(int madlram) {
-        return this.listDLRam.get(this.getIndexById(madlram)).getDungluongram();
+        return this.list.get(this.getIndexByCode(madlram)).getDungluongram();
     }
     
     public String[] getArrKichThuoc() {
-        String[] result = new String[listDLRam.size()];
-        for(int i = 0; i < listDLRam.size(); i++) {
-            result[i] = Integer.toString(listDLRam.get(i).getDungluongram())+"GB";
+        String[] result = new String[list.size()];
+        for(int i = 0; i < list.size(); i++) {
+            result[i] = Integer.toString(list.get(i).getDungluongram())+"GB";
         }
         return result;
     }

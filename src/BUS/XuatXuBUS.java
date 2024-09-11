@@ -6,71 +6,54 @@ package BUS;
 
 import DAO.XuatXuDAO;
 import DTO.ThuocTinhSanPham.XuatXuDTO;
-import java.util.ArrayList;
 
 /**
  *
  * @author 84907
  */
-public class XuatXuBUS {
-    private XuatXuDAO xuatxuDAO = new XuatXuDAO();
-    private ArrayList<XuatXuDTO> listXuatXu = new ArrayList<>();
-
+public class XuatXuBUS extends BaseBUS<XuatXuDTO>{
     public XuatXuBUS() {
-        this.listXuatXu = xuatxuDAO.selectAll();
-    }
-
-    public ArrayList<XuatXuDTO> getAll() {
-        return this.listXuatXu;
+        super(new XuatXuDAO());
     }
 
     public String[] getArrTenXuatXu() {
-        String[] result = new String[listXuatXu.size()];
-        for (int i = 0; i < listXuatXu.size(); i++) {
-            result[i] = listXuatXu.get(i).getTenxuatxu();
+        String[] result = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i).getTenxuatxu();
         }
         return result;
     }
 
-    public XuatXuDTO getByIndex(int index) {
-        return this.listXuatXu.get(index);
-    }
-
-    public boolean add(XuatXuDTO xuatxu) {
-        boolean check = xuatxuDAO.insert(xuatxu) != 0;
+    @Override
+    public boolean delete(XuatXuDTO xuatxu) {
+        boolean check = DAO.delete(Integer.toString(xuatxu.getMaxuatxu())) != 0;
         if (check) {
-            this.listXuatXu.add(xuatxu);
+            list.remove(xuatxu);
         }
         return check;
     }
 
-    public boolean delete(XuatXuDTO xuatxu, int index) {
-        boolean check = xuatxuDAO.delete(Integer.toString(xuatxu.getMaxuatxu())) != 0;
-        if (check) {
-            this.listXuatXu.remove(index);
-        }
-        return check;
-    }
-
-    public int getIndexByMaXX(int maxx) {
+    @Override
+    public int getIndexByCode(int maxx) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listXuatXu.size() && vitri == -1) {
-            if (listXuatXu.get(i).getMaxuatxu()== maxx) vitri = i;
+        while (i < list.size() && vitri == -1) {
+            if (list.get(i).getMaxuatxu() == maxx) vitri = i;
             else i++;
         }
         return vitri;
     }
 
     public String getTenXuatXu(int maxx) {
-        int index = this.getIndexByMaXX(maxx);
-        return this.listXuatXu.get(index).getTenxuatxu();
+        int index = this.getIndexByCode(maxx);
+        return list.get(index).getTenxuatxu();
     }
 
+    @Override
     public boolean update(XuatXuDTO xuatxu) {
-        boolean check = xuatxuDAO.update(xuatxu) != 0;
+        boolean check = DAO.update(xuatxu) != 0;
         if (check) {
-            this.listXuatXu.set(getIndexByMaXX(xuatxu.getMaxuatxu()), xuatxu);
+            list.set(getIndexByCode(xuatxu.getMaxuatxu()), xuatxu);
         }
         return check;
     }
@@ -78,14 +61,12 @@ public class XuatXuBUS {
     public boolean checkDup(String name) {
         boolean check = true;
         int i = 0;
-        while (i <= this.listXuatXu.size() && check == true) {
-            if (this.listXuatXu.get(i).getTenxuatxu().toLowerCase().contains(name.toLowerCase())) {
+        while (i < list.size() && check == true) {
+            if (list.get(i).getTenxuatxu().toLowerCase().contains(name.toLowerCase())) {
                 check = false;
-            } else {
-                i++;
-            }
+            } 
+            else i++;
         }
         return check;
     }
-
 }

@@ -153,7 +153,7 @@ public class DungLuongRomDialog extends JDialog implements MouseListener {
         } else if (e.getSource() == del) {
             int index = getRowSelected();
             if (index != -1) {
-                dlrBUS.delete(list.get(index), index);
+                dlrBUS.delete(list.get(index));
                 loadDataTable(list);
                 ms.setText("");
             }

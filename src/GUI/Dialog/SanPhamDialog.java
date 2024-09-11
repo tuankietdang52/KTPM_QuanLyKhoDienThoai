@@ -516,8 +516,8 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
         cameratruoc.setText(sp.getCameratruoc());
         thoigianbaohanh.setText(Integer.toString(sp.getThoigianbaohanh()));
         phienbanhdh.setText(Integer.toString(sp.getPhienbanhdh()));
-        thuonghieu.setSelectedIndex(thuonghieuBus.getIndexByMaLH(sp.getThuonghieu()));
-        khuvuc.setSelectedIndex(jpSP.spBUS.getIndexByMaSP(sp.getKhuvuckho()));
+        thuonghieu.setSelectedIndex(thuonghieuBus.getIndexByCode(sp.getThuonghieu()));
+        khuvuc.setSelectedIndex(jpSP.spBUS.getIndexByCode(sp.getKhuvuckho()));
     }
 
     public PhienBanSanPhamDTO getCauHinh() {
@@ -598,9 +598,9 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     }
 
     public void setInfoCauHinh(PhienBanSanPhamDTO ch) {
-        cbxMausac.setSelectedIndex(mausacBus.getIndexByMaMau(ch.getMausac()));
-        cbxRam.setSelectedIndex(ramBus.getIndexByMaRam(ch.getRam()));
-        cbxRom.setSelectedIndex(romBus.getIndexByMaRom(ch.getRom()));
+        cbxMausac.setSelectedIndex(mausacBus.getIndexByCode(ch.getMausac()));
+        cbxRam.setSelectedIndex(ramBus.getIndexByCode(ch.getRam()));
+        cbxRom.setSelectedIndex(romBus.getIndexByCode(ch.getRom()));
         txtgianhap.setText(Integer.toString(ch.getGianhap()));
         txtgiaxuat.setText(Integer.toString(ch.getGiaxuat()));
     }

@@ -6,7 +6,6 @@ import DAO.PhieuKiemKeDAO;
 import DTO.ChiTietKiemKeDTO;
 import DTO.ChiTietKiemKeSanPhamDTO;
 import DTO.PhieuKiemKeDTO;
-import DTO.PhieuNhapDTO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;

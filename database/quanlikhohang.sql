@@ -759,11 +759,11 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`manv`, `hoten`, `gioitinh`, `ngaysinh`, `sdt`, `email`, `trangthai`) VALUES
-(1, 'Trần Nhật Sinh', 1, '2003-12-20', '0387913347', 'transinh085@gmail.com', 1),
-(2, 'Hoàng Gia Bảo', 1, '2023-04-11', '0355374322', 'musicanime2501@gmail.com', 1),
-(3, 'Đỗ Nam Công Chính', 1, '2003-04-11', '0123456789', 'chinchin@gmail.com', 1),
-(4, 'Đinh Ngọc Ân', 1, '2003-04-03', '0123456789', 'ngocan@gmail.com', 1),
-(5, 'Vũ Trung Hiếu', 1, '2023-05-06', '0123456789', 'hieu@gmail.com', 1);
+(1, 'Trần Nhật Sinh', 1, '2003-12-20', '0387913347', 'transinh085@gmail.com', -1),
+(2, 'Khôi Duy', 1, '2023-04-11', '0355374322', 'khoiduy123@gmail.com', 1),
+(3, 'Tuấn Kiệt', 1, '2003-04-11', '0123456789', 'tuankiet123@gmail.com', 1),
+(4, 'lmao', 1, '2003-04-03', '0123456789', 'lmao@gmail.com', 1),
+(5, 'shiba', 1, '2023-05-06', '0123456789', 'shiba@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -1089,10 +1089,10 @@ CREATE TABLE `taikhoan` (
 
 INSERT INTO `taikhoan` (`manv`, `matkhau`, `manhomquyen`, `tendangnhap`, `trangthai`, `otp`) VALUES
 (1, '$2a$12$6GSkiQ05XjTRvCW9MB6MNuf7hOJEbbeQx11Eb8oELil1OrCq6uBXm', 1, 'admin', 1, 'null'),
-(2, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 1, 'hgbaodev', 1, '451418'),
-(3, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 10, 'chinh', 1, NULL),
-(4, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 2, 'ngocan', 0, NULL),
-(5, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 3, 'hieunek', 0, NULL);
+(2, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 1, 'khoiduy', 1, '451418'),
+(3, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 10, 'tuankiet', 1, NULL),
+(4, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 2, 'lmao', 1, NULL),
+(5, '$2a$12$SAlAhcsudMzNEouyBaoHnOKR23ixdH0ZkcoyXUJ5gS/NFt.b4oqw6', 3, 'shiba', 1, NULL);
 
 -- --------------------------------------------------------
 

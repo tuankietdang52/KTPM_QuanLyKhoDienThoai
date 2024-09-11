@@ -282,7 +282,7 @@ public class KhuVucKho extends JPanel implements ActionListener, ItemListener {
                         }
                     }
                     if (check == 0) {
-                        kvkBUS.delete(listKVK.get(index), index);
+                        kvkBUS.delete(listKVK.get(index));
                         loadDataTable(listKVK);
                     }
                     else {

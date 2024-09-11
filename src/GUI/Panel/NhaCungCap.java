@@ -241,7 +241,7 @@ public final class NhaCungCap extends JPanel implements ActionListener, ItemList
                         "Bạn có chắc chắn muốn xóa nhà cung cấp!", "Xóa nhà cung cấp",
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (input == 0) {
-                    nccBUS.delete(listncc.get(index), index);
+                    nccBUS.delete(listncc.get(index));
                     loadDataTable(listncc);
                 }
             }

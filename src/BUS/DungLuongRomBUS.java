@@ -6,38 +6,26 @@ package BUS;
 
 import DAO.DungLuongRomDAO;
 import DTO.ThuocTinhSanPham.DungLuongRomDTO;
-import java.util.ArrayList;
 
 /**
  *
  * @author Tran Nhat Sinh
  */
-public class DungLuongRomBUS {
-
-    private final DungLuongRomDAO dlromDAO = new DungLuongRomDAO();
-    private ArrayList<DungLuongRomDTO> listDLRom = new ArrayList<>();
-
+public class DungLuongRomBUS extends BaseBUS<DungLuongRomDTO>{
     public DungLuongRomBUS getInstance() {
         return new DungLuongRomBUS();
     }
 
     public DungLuongRomBUS() {
-        listDLRom = dlromDAO.selectAll();
+        super(new DungLuongRomDAO());
     }
 
-    public ArrayList<DungLuongRomDTO> getAll() {
-        return this.listDLRom;
-    }
-
-    public DungLuongRomDTO getByIndex(int index) {
-        return this.listDLRom.get(index);
-    }
-
-    public int getIndexByMaRom(int marom) {
+    @Override
+    public int getIndexByCode(int marom) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listDLRom.size() && vitri == -1) {
-            if (listDLRom.get(i).getMadungluongrom() == marom) {
+        while (i < this.list.size() && vitri == -1) {
+            if (list.get(i).getMadungluongrom() == marom) {
                 vitri = i;
             } else {
                 i++;
@@ -46,51 +34,32 @@ public class DungLuongRomBUS {
         return vitri;
     }
 
-    public boolean add(DungLuongRomDTO dlrom) {
-        boolean check = dlromDAO.insert(dlrom) != 0;
+    @Override
+    public boolean delete(DungLuongRomDTO dlrom) {
+        boolean check = DAO.delete(Integer.toString(dlrom.getMadungluongrom())) != 0;
         if (check) {
-            this.listDLRom.add(dlrom);
+            list.remove(dlrom);
         }
         return check;
     }
 
-    public boolean delete(DungLuongRomDTO dlrom, int index) {
-        boolean check = dlromDAO.delete(Integer.toString(dlrom.getMadungluongrom())) != 0;
-        if (check) {
-            this.listDLRom.remove(index);
-        }
-        return check;
-    }
-
+    @Override
     public boolean update(DungLuongRomDTO dlrom) {
-        boolean check = dlromDAO.update(dlrom) != 0;
+        boolean check = DAO.update(dlrom) != 0;
         if (check) {
-            this.listDLRom.set(getIndexById(dlrom.getMadungluongrom()), dlrom);
+            list.set(getIndexByCode(dlrom.getMadungluongrom()), dlrom);
         }
         return check;
-    }
-
-    public int getIndexById(int madlrom) {
-        int i = 0;
-        int vitri = -1;
-        while (i < this.listDLRom.size() && vitri == -1) {
-            if (listDLRom.get(i).getMadungluongrom() == madlrom) {
-                vitri = i;
-            } else {
-                i++;
-            }
-        }
-        return vitri;
     }
 
     public int getKichThuocById(int madlrom) {
-        return this.listDLRom.get(this.getIndexById(madlrom)).getDungluongrom();
+        return this.list.get(this.getIndexByCode(madlrom)).getDungluongrom();
     }
 
     public String[] getArrKichThuoc() {
-        String[] result = new String[listDLRom.size()];
-        for (int i = 0; i < listDLRom.size(); i++) {
-            result[i] = Integer.toString(listDLRom.get(i).getDungluongrom()) + "GB";
+        String[] result = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = Integer.toString(list.get(i).getDungluongrom()) + "GB";
         }
         return result;
     }
@@ -98,12 +67,11 @@ public class DungLuongRomBUS {
     public boolean checkDup(int dl) {
         boolean check = true;
         int i = 0;
-        while (i <= this.listDLRom.size() && check == true) {
-            if (this.listDLRom.get(i).getDungluongrom()== dl) {
+        while (i < list.size() && check == true) {
+            if (list.get(i).getDungluongrom() == dl) {
                 check = false;
-            } else {
-                i++;
             }
+            else i++;
         }
         return check;
     }

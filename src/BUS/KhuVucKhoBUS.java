@@ -8,32 +8,21 @@ import DAO.KhuVucKhoDAO;
 import DTO.KhuVucKhoDTO;
 import java.util.ArrayList;
 
-public class KhuVucKhoBUS {
-
-    private final KhuVucKhoDAO kvkDAO = new KhuVucKhoDAO();
-    private ArrayList<KhuVucKhoDTO> listKVK = new ArrayList<>();
-
+public class KhuVucKhoBUS extends BaseBUS<KhuVucKhoDTO>{
     public KhuVucKhoBUS getInstance() {
         return new KhuVucKhoBUS();
     }
     
     public KhuVucKhoBUS() {
-        listKVK = kvkDAO.selectAll();
+        super(new KhuVucKhoDAO());
     }
 
-    public ArrayList<KhuVucKhoDTO> getAll() {
-        return this.listKVK;
-    }
-
-    public KhuVucKhoDTO getByIndex(int index) {
-        return this.listKVK.get(index);
-    }
-
-    public int getIndexByMaLH(int makhuvuc) {
+    @Override
+    public int getIndexByCode(int makhuvuc) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listKVK.size() && vitri == -1) {
-            if (listKVK.get(i).getMakhuvuc() == makhuvuc) {
+        while (i < this.list.size() && vitri == -1) {
+            if (list.get(i).getMakhuvuc() == makhuvuc) {
                 vitri = i;
             } else {
                 i++;
@@ -42,42 +31,22 @@ public class KhuVucKhoBUS {
         return vitri;
     }
 
-    public boolean add(KhuVucKhoDTO kvk) {
-        boolean check = kvkDAO.insert(kvk) != 0;
+    @Override
+    public boolean delete(KhuVucKhoDTO kvk) {
+        boolean check = DAO.delete(Integer.toString(kvk.getMakhuvuc())) != 0;
         if (check) {
-            this.listKVK.add(kvk);
+            list.remove(kvk);
         }
         return check;
     }
 
-    public boolean delete(KhuVucKhoDTO kvk, int index) {
-        boolean check = kvkDAO.delete(Integer.toString(kvk.getMakhuvuc())) != 0;
-        if (check) {
-            this.listKVK.remove(index);
-        }
-        return check;
-    }
-
+    @Override
     public boolean update(KhuVucKhoDTO kvk) {
-        boolean check = kvkDAO.update(kvk) != 0;
+        boolean check = DAO.update(kvk) != 0;
         if (check) {
-            this.listKVK.set(getIndexByMaKVK(kvk.getMakhuvuc()), kvk);
+            this.list.set(getIndexByCode(kvk.getMakhuvuc()), kvk);
         }
         return check;
-    }
-
-    public int getIndexByMaKVK(int makvk) {
-        int i = 0;
-        int vitri = -1;
-        while (i < this.listKVK.size() && vitri == -1) {
-            if (listKVK.get(i).getMakhuvuc() == makvk) {
-                vitri = i;
-                break;
-            } else {
-                i++;
-            }
-        }
-        return vitri;
     }
 
     public ArrayList<KhuVucKhoDTO> search(String txt, String type) {
@@ -85,21 +54,21 @@ public class KhuVucKhoBUS {
         txt = txt.toLowerCase();
         switch (type) {
             case "Tất cả" -> {
-                for (KhuVucKhoDTO i : listKVK) {
+                for (KhuVucKhoDTO i : list) {
                     if (Integer.toString(i.getMakhuvuc()).contains(txt) || i.getTenkhuvuc().toLowerCase().contains(txt)){
                         result.add(i);
                     }
                 }
             }
             case "Mã khu vực kho" -> {
-                for (KhuVucKhoDTO i : listKVK) {
+                for (KhuVucKhoDTO i : list) {
                     if (Integer.toString(i.getMakhuvuc()).contains(txt)) {
                         result.add(i);
                     }
                 }
             }
             case "Tên khu vực kho" -> {
-                for (KhuVucKhoDTO i : listKVK) {
+                for (KhuVucKhoDTO i : list) {
                     if (i.getTenkhuvuc().toLowerCase().contains(txt)) {
                         result.add(i);
                     }
@@ -110,15 +79,15 @@ public class KhuVucKhoBUS {
     }
     
     public String[] getArrTenKhuVuc() {
-        int size = listKVK.size();
+        int size = list.size();
         String[] result = new String[size];
         for(int i = 0; i < size; i++) {
-            result[i] = listKVK.get(i).getTenkhuvuc();
+            result[i] = list.get(i).getTenkhuvuc();
         }
         return result;
     }
     
     public String getTenKhuVuc(int makhuvuc) {
-        return this.listKVK.get(this.getIndexByMaKVK(makhuvuc)).getTenkhuvuc();
+        return this.list.get(this.getIndexByCode(makhuvuc)).getTenkhuvuc();
     }
 }

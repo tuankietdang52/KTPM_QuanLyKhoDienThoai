@@ -147,7 +147,7 @@ public class MauSacDialog extends JDialog implements MouseListener {
         } else if (e.getSource() == del) {
             int index = getRowSelected();
             if (index != -1) {
-                msBUS.delete(list.get(index), index);
+                msBUS.delete(list.get(index));
                 loadDataTable(list);
                 ms.setText("");
             }

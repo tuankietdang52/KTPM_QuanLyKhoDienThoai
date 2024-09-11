@@ -12,57 +12,47 @@ import java.util.ArrayList;
  *
  * @author 84907
  */
-public class ThuongHieuBUS {
-
-    private final ThuongHieuDAO lhDAO = new ThuongHieuDAO();
-    private ArrayList<ThuongHieuDTO> listLH = new ArrayList<>();
-
+public class ThuongHieuBUS extends BaseBUS<ThuongHieuDTO>{
     public ThuongHieuBUS() {
-        listLH = lhDAO.selectAll();
+        super(new ThuongHieuDAO());
     }
 
-    public ArrayList<ThuongHieuDTO> getAll() {
-        return this.listLH;
-    }
-
-    public ThuongHieuDTO getByIndex(int index) {
-        return this.listLH.get(index);
-    }
-
-    public int getIndexByMaLH(int maloaihang) {
+    @Override
+    public int getIndexByCode(int maloaihang) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listLH.size() && vitri == -1) {
-            if (listLH.get(i).getMathuonghieu() == maloaihang) {
+        while (i < list.size() && vitri == -1) {
+            if (list.get(i).getMathuonghieu() == maloaihang) {
                 vitri = i;
-            } else {
-                i++;
-            }
+            } 
+            else i++;
         }
         return vitri;
     }
 
     public Boolean add(String name) {
-        ThuongHieuDTO lh = new ThuongHieuDTO(lhDAO.getAutoIncrement(), name);
-        boolean check = lhDAO.insert(lh) != 0;
+        ThuongHieuDTO lh = new ThuongHieuDTO(DAO.getAutoIncrement(), name);
+        boolean check = DAO.insert(lh) != 0;
         if (check) {
-            this.listLH.add(lh);
+            list.add(lh);
         }
         return check;
     }
 
-    public Boolean delete(ThuongHieuDTO lh) {
-        boolean check = lhDAO.delete(Integer.toString(lh.getMathuonghieu())) != 0;
+    @Override
+    public boolean delete(ThuongHieuDTO lh) {
+        boolean check = DAO.delete(Integer.toString(lh.getMathuonghieu())) != 0;
         if (check) {
-            this.listLH.remove(lh);
+            list.remove(lh);
         }
         return check;
     }
 
-    public Boolean update(ThuongHieuDTO lh) {
-        boolean check = lhDAO.update(lh) != 0;
+    @Override
+    public boolean update(ThuongHieuDTO lh) {
+        boolean check = DAO.update(lh) != 0;
         if (check) {
-            this.listLH.set(getIndexByMaLH(lh.getMathuonghieu()), lh);
+            list.set(getIndexByCode(lh.getMathuonghieu()), lh);
         }
         return check;
     }
@@ -70,7 +60,7 @@ public class ThuongHieuBUS {
     public ArrayList<ThuongHieuDTO> search(String text) {
         text = text.toLowerCase();
         ArrayList<ThuongHieuDTO> result = new ArrayList<>();
-        for (ThuongHieuDTO i : this.listLH) {
+        for (ThuongHieuDTO i : list) {
             if (Integer.toString(i.getMathuonghieu()).toLowerCase().contains(text) || i.getTenthuonghieu().toLowerCase().contains(text)) {
                 result.add(i);
             }
@@ -79,27 +69,26 @@ public class ThuongHieuBUS {
     }
 
     public String[] getArrTenThuongHieu() {
-        int size = listLH.size();
+        int size = list.size();
         String[] result = new String[size];
         for (int i = 0; i < size; i++) {
-            result[i] = listLH.get(i).getTenthuonghieu();
+            result[i] = list.get(i).getTenthuonghieu();
         }
         return result;
     }
 
     public String getTenThuongHieu(int mathuonghieu) {
-        return this.listLH.get(this.getIndexByMaLH(mathuonghieu)).getTenthuonghieu();
+        return list.get(this.getIndexByCode(mathuonghieu)).getTenthuonghieu();
     }
 
     public boolean checkDup(String name) {
         boolean check = true;
         int i = 0;
-        while (i <= this.listLH.size() && check == true) {
-            if (this.listLH.get(i).getTenthuonghieu().toLowerCase().contains(name.toLowerCase())) {
+        while (i < list.size() && check == true) {
+            if (list.get(i).getTenthuonghieu().toLowerCase().contains(name.toLowerCase())) {
                 check = false;
-            } else {
-                i++;
-            }
+            } 
+            else i++;
         }
         return check;
     }

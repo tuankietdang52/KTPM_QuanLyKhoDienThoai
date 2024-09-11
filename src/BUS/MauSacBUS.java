@@ -6,58 +6,43 @@ package BUS;
 
 import DAO.MauSacDAO;
 import DTO.ThuocTinhSanPham.MauSacDTO;
-import java.util.ArrayList;
 
 /**
  *
  * @author Tran Nhat Sinh
  */
-public class MauSacBUS {
-
-    private MauSacDAO mausacDAO = new MauSacDAO();
-    private ArrayList<MauSacDTO> listMauSac = new ArrayList<>();
-
+public class MauSacBUS extends BaseBUS<MauSacDTO>{
     public MauSacBUS() {
-        this.listMauSac = mausacDAO.selectAll();
-    }
-
-    public ArrayList<MauSacDTO> getAll() {
-        return this.listMauSac;
+        super(new MauSacDAO());
     }
 
     public String[] getArrTenMauSac() {
-        String[] result = new String[listMauSac.size()];
-        for (int i = 0; i < listMauSac.size(); i++) {
-            result[i] = listMauSac.get(i).getTenmau();
+        String[] result = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i).getTenmau();
         }
         return result;
     }
 
     public MauSacDTO getByIndex(int index) {
-        return this.listMauSac.get(index);
+        return this.list.get(index);
     }
 
-    public boolean add(MauSacDTO msac) {
-        boolean check = mausacDAO.insert(msac) != 0;
+    @Override
+    public boolean delete(MauSacDTO msac) {
+        boolean check = DAO.delete(Integer.toString(msac.getMamau())) != 0;
         if (check) {
-            this.listMauSac.add(msac);
+            list.remove(msac);
         }
         return check;
     }
 
-    public boolean delete(MauSacDTO msac, int index) {
-        boolean check = mausacDAO.delete(Integer.toString(msac.getMamau())) != 0;
-        if (check) {
-            this.listMauSac.remove(index);
-        }
-        return check;
-    }
-
-    public int getIndexByMaMau(int mamau) {
+    @Override
+    public int getIndexByCode(int mamau) {
         int i = 0;
         int vitri = -1;
-        while (i < this.listMauSac.size() && vitri == -1) {
-            if (listMauSac.get(i).getMamau() == mamau) {
+        while (i < this.list.size() && vitri == -1) {
+            if (list.get(i).getMamau() == mamau) {
                 vitri = i;
             } else {
                 i++;
@@ -67,15 +52,16 @@ public class MauSacBUS {
     }
 
     public String getTenMau(int mamau) {
-        int index = this.getIndexByMaMau(mamau);
+        int index = this.getIndexByCode(mamau);
         System.out.println(index);
-        return this.listMauSac.get(index).getTenmau();
+        return this.list.get(index).getTenmau();
     }
 
+    @Override
     public boolean update(MauSacDTO msac) {
-        boolean check = mausacDAO.update(msac) != 0;
+        boolean check = DAO.update(msac) != 0;
         if (check) {
-            this.listMauSac.set(getIndexByMaMau(msac.getMamau()), msac);
+            list.set(getIndexByCode(msac.getMamau()), msac);
         }
         return check;
     }
@@ -83,14 +69,12 @@ public class MauSacBUS {
     public boolean checkDup(String name) {
         boolean check = true;
         int i = 0;
-        while (i <= this.listMauSac.size() && check == true) {
-            if (this.listMauSac.get(i).getTenmau().toLowerCase().contains(name.toLowerCase())) {
+        while (i < list.size() && check == true) {
+            if (this.list.get(i).getTenmau().toLowerCase().contains(name.toLowerCase())) {
                 check = false;
-            } else {
-                i++;
-            }
+            } 
+            else i++;
         }
         return check;
     }
-
 }
