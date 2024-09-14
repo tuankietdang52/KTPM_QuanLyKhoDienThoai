@@ -52,7 +52,7 @@ public class KhuVucKho extends JPanel implements ActionListener, ItemListener {
     MainFunction mainFunction;
     IntegratedSearch search;
     JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
     DefaultTableModel tblModel;
     Main m;
     public KhuVucKhoBUS kvkBUS = new KhuVucKhoBUS();
@@ -143,6 +143,7 @@ public class KhuVucKho extends JPanel implements ActionListener, ItemListener {
         right.setLayout(new FlowLayout(0, 4, 10));
         right.setPreferredSize(new Dimension(400, 800));
         JLabel tit = new JLabel("Danh sách sản phẩm trong kho");
+        tit.setForeground(Color.white);
         tit.setFont(new java.awt.Font(FlatRobotoFont.FAMILY, 1, 16));
         right.add(tit);
 //        right.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách sản phẩm trong kho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14)));
@@ -224,6 +225,7 @@ public class KhuVucKho extends JPanel implements ActionListener, ItemListener {
     public void ListCustomersInDePot(ArrayList<SanPhamDTO> result) {
         right.removeAll();
         JLabel tit = new JLabel("Danh sách sản phẩm đang có ở khu vực");
+        tit.setForeground(Color.white);
         tit.setFont(new java.awt.Font(FlatRobotoFont.FAMILY, 1, 16));
         right.add(tit);
         itemTaskbar listItem[] = new itemTaskbar[result.size()];

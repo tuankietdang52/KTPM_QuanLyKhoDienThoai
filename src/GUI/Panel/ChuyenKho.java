@@ -20,7 +20,7 @@ public class ChuyenKho extends JPanel {
     JLabel lbl1, lblImage;
     DefaultTableModel tblModel;
     
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
 
     private void initComponent() {
 

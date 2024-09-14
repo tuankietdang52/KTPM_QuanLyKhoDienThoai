@@ -1,6 +1,7 @@
 package GUI;
 
 import DTO.TaiKhoanDTO;
+import GUI.Panel.SanPham;
 import GUI.Panel.TrangChu;
 import java.awt.*;
 import javax.swing.*;
@@ -21,7 +22,6 @@ public class Main extends JFrame {
     Color MainColor = new Color(250, 250, 250);
 
     private MenuTaskbar menuTaskbar;
-    private TrangChu trangChu;
 
     private void initComponent() {
         this.setSize(new Dimension(1400, 800));
@@ -29,6 +29,10 @@ public class Main extends JFrame {
         this.setLayout(new BorderLayout(0, 0));
         this.setTitle("Hệ thống quản lý kho hàng ");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        MainContent = new JPanel();
+        MainContent.setBackground(MainColor);
+        MainContent.setLayout(new BorderLayout(0, 0));
 
         if (user != null) {
             menuTaskbar = new MenuTaskbar(this, user);
@@ -39,15 +43,7 @@ public class Main extends JFrame {
         menuTaskbar.setPreferredSize(new Dimension(250, 1400));
 
         this.add(menuTaskbar, BorderLayout.WEST);
-
-        MainContent = new JPanel();
-        MainContent.setBackground(MainColor);
-        MainContent.setLayout(new BorderLayout(0, 0));
-
         this.add(MainContent, BorderLayout.CENTER);
-
-        trangChu = new TrangChu();
-        MainContent.add(trangChu).setVisible(true);
     }
 
     public Main() {
@@ -56,7 +52,6 @@ public class Main extends JFrame {
 
     public Main(TaiKhoanDTO user) throws UnsupportedLookAndFeelException {
         this.user = user;
-        initComponent();
         FlatRobotoFont.install();
         FlatLaf.setPreferredFontFamily(FlatRobotoFont.FAMILY);
         FlatLaf.setPreferredLightFontFamily(FlatRobotoFont.FAMILY_LIGHT);
@@ -80,6 +75,8 @@ public class Main extends JFrame {
         UIManager.put("TableHeader.background", new Color(242, 242, 242));
         UIManager.put("TableHeader.separatorColor", new Color(242, 242, 242));
         UIManager.put("TableHeader.bottomSeparatorColor", new Color(242, 242, 242));
+
+        initComponent();
     }
 
     public void setPanel(JPanel pn) {

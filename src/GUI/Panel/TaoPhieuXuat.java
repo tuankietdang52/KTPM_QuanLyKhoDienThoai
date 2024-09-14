@@ -66,7 +66,7 @@ public final class TaoPhieuXuat extends JPanel {
     InputForm txtMaphieu, txtNhanVien, txtMaSp, txtTenSp, txtSoluongTon;
     SelectForm cbxPhienBan;
     JTextField txtTimKiem;
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
 
     int sum;
     int maphieu;

@@ -25,7 +25,7 @@ public final class NhanVien extends JPanel {
     Main m;
     ArrayList<DTO.NhanVienDTO> listnv = nvBus.getAll();
 
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
     private DefaultTableModel tblModel;
 
     private void initComponent() {

@@ -51,7 +51,7 @@ public class TaiKhoan extends JPanel implements ActionListener, ItemListener {
     MainFunction mainFunction;
     IntegratedSearch search;
     public JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
     DefaultTableModel tblModel;
     public TaiKhoanBUS taiKhoanBus = new TaiKhoanBUS();
     ArrayList<TaiKhoanDTO> listTk = taiKhoanBus.getTaiKhoanAll();
@@ -207,7 +207,7 @@ public class TaiKhoan extends JPanel implements ActionListener, ItemListener {
         } else if (e.getSource() == mainFunction.btn.get("detail")) {
             int index = getRowSelected();
             if (index != -1) {
-                TaiKhoanDialog add = new TaiKhoanDialog(this, owner, "Thêm tài khoản", true, "view", listTk.get(index));
+                TaiKhoanDialog add = new TaiKhoanDialog(this, owner, "Chi tiết tài khoản", true, "view", listTk.get(index));
             }
         } else if (e.getSource() == mainFunction.btn.get("export")) {
             try {

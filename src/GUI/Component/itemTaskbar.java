@@ -19,6 +19,10 @@ public class itemTaskbar extends JPanel implements MouseListener {
     Color FontColor = new Color(96, 125, 139);
     Color ColorBlack = new Color(26, 26, 26);
     Color DefaultColor = new Color(255, 255, 255);
+
+    Color backgroundColor = new Color(255, 255, 255);
+    Color hoverBackgroundColor = new Color(235, 237, 240);
+
     JLabel lblIcon, pnlContent, pnlSoLuong, pnlContent1;
     JPanel right;
     JLabel img;
@@ -124,6 +128,15 @@ public class itemTaskbar extends JPanel implements MouseListener {
         center.add(pnlContent1);
     }
 
+    // mouse released 
+    public void setBackgroundColor(Color color){
+        backgroundColor = color;
+    }
+
+    public void setHoverBackgroundColor(Color color){
+        hoverBackgroundColor = color;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 //        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -142,7 +155,7 @@ public class itemTaskbar extends JPanel implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if (!isSelected) {
-            setBackground(new Color(235, 237, 240));
+            setBackground(hoverBackgroundColor);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
         }
     }
@@ -150,7 +163,7 @@ public class itemTaskbar extends JPanel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         if (!isSelected) {
-            setBackground(new Color(255, 255, 255));
+            setBackground(backgroundColor);
         }
     }
 }

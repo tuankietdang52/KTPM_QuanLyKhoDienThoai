@@ -59,7 +59,7 @@ public final class PhieuXuat extends JPanel implements ActionListener, KeyListen
     TaoPhieuXuat taoPhieuXuat;
     TaiKhoanDTO tk;
 
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
 
     ArrayList<PhieuXuatDTO> listPhieuXuat;
 

@@ -22,6 +22,8 @@ import GUI.Panel.SanPham;
 import GUI.Panel.TaiKhoan;
 import GUI.Panel.TrangChu;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.itextpdf.text.Font;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -34,7 +36,6 @@ import GUI.Panel.ThongKe.ThongKe;
 //import GUI.Component.itemTaskbar;
 public class MenuTaskbar extends JPanel {
 
-    TrangChu trangChu;
     SanPham sanPham;
     QuanLyThuocTinhSP quanLyThuocTinhSP;
     KhuVucKho quanLyKho;
@@ -47,7 +48,6 @@ public class MenuTaskbar extends JPanel {
     PhanQuyen phanQuyen;
     ThongKe thongKe;
     String[][] getSt = {
-        {"Trang chủ", "home.svg", "trangchu"},
         {"Sản phẩm", "product.svg", "sanpham"},
         {"Thuộc tính", "brand.svg", "thuoctinh"},
         {"Khu vực kho", "area.svg", "khuvuckho"},
@@ -69,13 +69,14 @@ public class MenuTaskbar extends JPanel {
     JLabel lblTenNhomQuyen, lblUsername;
     JScrollPane scrollPane;
 
-    //tasbarMenu chia thành 3 phần chính là pnlCenter, pnlTop, pnlBottom
+    //taskbarMenu chia thành 3 phần chính là pnlCenter, pnlTop, pnlBottom
     JPanel pnlCenter, pnlTop, pnlBottom, bar1, bar2, bar3, bar4;
 
     Color FontColor = new Color(96, 125, 139);
-    Color DefaultColor = new Color(255, 255, 255);
+    Color DefaultColor = new Color(127, 127, 127);
     Color HowerFontColor = new Color(1, 87, 155);
-    Color HowerBackgroundColor = new Color(187, 222, 251);
+    Color HowerBackgroundColor = new Color(95, 95, 95);
+
     private ArrayList<ChiTietQuyenDTO> listQuyen;
     NhomQuyenDTO nhomQuyenDTO;
     public NhanVienDTO nhanVienDTO;
@@ -92,7 +93,9 @@ public class MenuTaskbar extends JPanel {
         this.nhomQuyenDTO = NhomQuyenDAO.getInstance().selectById(Integer.toString(tk.getManhomquyen()));
         this.nhanVienDTO = NhanVienDAO.getInstance().selectById(Integer.toString(tk.getManv()));
         listQuyen = ChiTietQuyenDAO.getInstance().selectAll(Integer.toString(tk.getManhomquyen()));
+
         initComponent();
+        main.setPanel(new SanPham(main));
     }
 
     private void initComponent() {
@@ -156,9 +159,15 @@ public class MenuTaskbar extends JPanel {
         for (int i = 0; i < getSt.length; i++) {
             if (i + 1 == getSt.length) {
                 listitem[i] = new itemTaskbar(getSt[i][1], getSt[i][0]);
+                listitem[i].setBackgroundColor(new Color(127, 127, 127));
+                listitem[i].setHoverBackgroundColor(new Color(111, 111, 111));
+            
                 pnlBottom.add(listitem[i]);
             } else {
                 listitem[i] = new itemTaskbar(getSt[i][1], getSt[i][0]);
+                listitem[i].setBackgroundColor(new Color(127, 127, 127));
+                listitem[i].setHoverBackgroundColor(new Color(111, 111, 111));
+
                 pnlCenter.add(listitem[i]);
                 if (i != 0) {
                     if (!checkRole(getSt[i][2])) {
@@ -168,9 +177,7 @@ public class MenuTaskbar extends JPanel {
             }
         }
 
-        listitem[0].setBackground(HowerBackgroundColor);
-        listitem[0].setForeground(HowerFontColor);
-        listitem[0].isSelected = true;
+        pnlMenuTaskbarMousePress(listitem[0]);
 
         for (int i = 0; i < getSt.length; i++) {
             listitem[i].addMouseListener(new MouseAdapter() {
@@ -184,27 +191,19 @@ public class MenuTaskbar extends JPanel {
         listitem[0].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                trangChu = new TrangChu();
-                main.setPanel(trangChu);
-            }
-        });
-
-        listitem[1].addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent evt) {
                 sanPham = new SanPham(main);
                 main.setPanel(sanPham);
 
             }
         });
-        listitem[2].addMouseListener(new MouseAdapter() {
+        listitem[1].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 quanLyThuocTinhSP = new QuanLyThuocTinhSP(main);
                 main.setPanel(quanLyThuocTinhSP);
             }
         });
-        listitem[3].addMouseListener(new MouseAdapter() {
+        listitem[2].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 quanLyKho = new KhuVucKho(main);
@@ -219,28 +218,28 @@ public class MenuTaskbar extends JPanel {
 //            }
 //        });
 
-        listitem[4].addMouseListener(new MouseAdapter() {
+        listitem[3].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 phieuNhap = new PhieuNhap(main, nhanVienDTO);
                 main.setPanel(phieuNhap);
             }
         });
-        listitem[5].addMouseListener(new MouseAdapter() {
+        listitem[4].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 phieuXuat = new PhieuXuat(main, user);
                 main.setPanel(phieuXuat);
             }
         });
-        listitem[6].addMouseListener(new MouseAdapter() {
+        listitem[5].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 khachHang = new KhachHang(main);
                 main.setPanel(khachHang);
             }
         });
-        listitem[7].addMouseListener(new MouseAdapter() {
+        listitem[6].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 nhacungcap = new NhaCungCap(main);
@@ -248,21 +247,21 @@ public class MenuTaskbar extends JPanel {
             }
         });
 
-        listitem[8].addMouseListener(new MouseAdapter() {
+        listitem[7].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 nhanVien = new NhanVien(main);
                 main.setPanel(nhanVien);
             }
         });
-        listitem[9].addMouseListener(new MouseAdapter() {
+        listitem[8].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 taiKhoan = new TaiKhoan(main);
                 main.setPanel(taiKhoan);
             }
         });
-        listitem[10].addMouseListener(new MouseAdapter() {
+        listitem[9].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
                 thongKe = new ThongKe();
@@ -270,7 +269,7 @@ public class MenuTaskbar extends JPanel {
             }
         });
 
-        listitem[11].addMouseListener(new MouseAdapter() {
+        listitem[10].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
            
@@ -279,7 +278,7 @@ public class MenuTaskbar extends JPanel {
             }
         });
 
-        listitem[12].addMouseListener(new MouseAdapter() {
+        listitem[11].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
 
@@ -308,6 +307,21 @@ public class MenuTaskbar extends JPanel {
         return check;
     }
 
+    // for default use
+    public void pnlMenuTaskbarMousePress(itemTaskbar item) {
+        for (int i = 0; i < getSt.length; i++) {
+            if (item == listitem[i]) {
+                listitem[i].isSelected = true;
+                listitem[i].setBackground(HowerBackgroundColor);
+                listitem[i].setForeground(HowerFontColor);
+            } else {
+                listitem[i].isSelected = false;
+                listitem[i].setBackground(DefaultColor);
+                listitem[i].setForeground(FontColor);
+            }
+        }
+    }
+
     public void pnlMenuTaskbarMousePress(MouseEvent evt) {
 
         for (int i = 0; i < getSt.length; i++) {
@@ -322,6 +336,7 @@ public class MenuTaskbar extends JPanel {
             }
         }
     }
+
     public void resetChange(){
         this.nhanVienDTO = new NhanVienDAO().selectById(String.valueOf(nhanVienDTO.getManv()));
     }
@@ -351,7 +366,9 @@ public class MenuTaskbar extends JPanel {
 
         lblTenNhomQuyen = new JLabel(nhomQuyenDTO.getTennhomquyen());
         lblTenNhomQuyen.putClientProperty("FlatLaf.style", "font: 120% $light.font");
-        lblTenNhomQuyen.setForeground(Color.GRAY);
+        lblTenNhomQuyen.setForeground(Color.WHITE);
+        lblTenNhomQuyen.setFont(lblTenNhomQuyen.getFont().deriveFont(Font.BOLD));
+
         pnlInfo.add(lblTenNhomQuyen);
 
         lblIcon.addMouseListener(new MouseAdapter() {

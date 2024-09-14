@@ -48,7 +48,7 @@ public final class NhaCungCap extends JPanel implements ActionListener, ItemList
     MainFunction mainFunction;
     IntegratedSearch search;
     JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
     DefaultTableModel tblModel;
     Main m;
     public NhaCungCapBUS nccBUS = new NhaCungCapBUS();

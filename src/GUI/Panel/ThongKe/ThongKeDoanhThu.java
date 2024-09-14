@@ -17,7 +17,7 @@ public class ThongKeDoanhThu extends JPanel {
     ThongKeDoanhThuTungNam thongketungnam;
     ThongKeDoanhThuTungThang thongkedoanhthutungthang;
     ThongKeDoanhThuTuNgayDenNgay thongkedoanhthutungaydenngay;
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
     ThongKeBUS thongkeBUS;
 
     public ThongKeDoanhThu(ThongKeBUS thongkeBUS) {

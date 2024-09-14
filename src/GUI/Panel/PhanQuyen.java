@@ -37,7 +37,7 @@ public class PhanQuyen extends JPanel implements ActionListener {
     public NhomQuyenBUS nhomquyenBUS = new NhomQuyenBUS();
     public ArrayList<NhomQuyenDTO> listnhomquyen = nhomquyenBUS.getAll();
 
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
 
     private void initComponent() {
         this.setBackground(BackgroundColor);

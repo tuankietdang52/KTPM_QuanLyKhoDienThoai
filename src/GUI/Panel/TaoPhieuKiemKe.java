@@ -55,7 +55,7 @@ public final class TaoPhieuKiemKe extends JPanel implements ItemListener, Action
     JLabel labelImei, lbltongtien;
     public JTextArea textAreaImei;
     Main m;
-    Color BackgroundColor = new Color(240, 247, 250);
+    Color BackgroundColor = new Color(63, 63, 63);
     JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
 
     SanPhamBUS spBUS = new SanPhamBUS();

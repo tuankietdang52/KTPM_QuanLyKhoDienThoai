@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class NhaCungCapBUS extends BaseBUS<NhaCungCapDTO>{
 
     private final NhaCungCapDAO NccDAO = new NhaCungCapDAO();
-    private ArrayList<NhaCungCapDTO> list = new ArrayList<>();
 
     public NhaCungCapBUS() {
         super(new NhaCungCapDAO());
