@@ -38,7 +38,7 @@ public class DungLuongRamBUS extends BaseBUS<DungLuongRamDTO> {
     public boolean delete(DungLuongRamDTO dlram) {
         boolean check = DAO.delete(Integer.toString(dlram.getMadlram())) != 0;
         if (check) {
-            list.remove(dlram);
+            list.removeIf(e -> e == dlram);
         }
         return check;
     }

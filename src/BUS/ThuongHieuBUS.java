@@ -43,7 +43,7 @@ public class ThuongHieuBUS extends BaseBUS<ThuongHieuDTO>{
     public boolean delete(ThuongHieuDTO lh) {
         boolean check = DAO.delete(Integer.toString(lh.getMathuonghieu())) != 0;
         if (check) {
-            list.remove(lh);
+            list.removeIf(e -> e == lh);
         }
         return check;
     }

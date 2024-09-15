@@ -451,8 +451,16 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     }
 
     public void eventAddSanPham() {
-        SanPhamDTO sp = getInfo();
-        sp.setHinhanh(addImage(sp.getHinhanh()));
+        SanPhamDTO sp;
+        try{
+            sp = getInfo();
+            sp.setHinhanh(addImage(sp.getHinhanh()));
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Thêm thất bại! Kiểm tra lại thông tin hoặc thiếu hình ảnh");
+            return;
+        }
+
+        
         if (jpSP.spBUS.add(sp, listch)) {
             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công !");
             jpSP.loadDataTalbe(jpSP.listSP);
@@ -517,7 +525,7 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
         thoigianbaohanh.setText(Integer.toString(sp.getThoigianbaohanh()));
         phienbanhdh.setText(Integer.toString(sp.getPhienbanhdh()));
         thuonghieu.setSelectedIndex(thuonghieuBus.getIndexByCode(sp.getThuonghieu()));
-        khuvuc.setSelectedIndex(jpSP.spBUS.getIndexByCode(sp.getKhuvuckho()));
+        khuvuc.setSelectedIndex(sp.getKhuvuckho() - 1);
     }
 
     public PhienBanSanPhamDTO getCauHinh() {

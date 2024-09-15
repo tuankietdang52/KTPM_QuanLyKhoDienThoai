@@ -24,7 +24,7 @@ public class NhaCungCapBUS extends BaseBUS<NhaCungCapDTO>{
     public boolean delete(NhaCungCapDTO ncc) {
         boolean check = NccDAO.delete(Integer.toString(ncc.getMancc())) != 0;
         if (check) {
-            list.remove(ncc);
+            list.removeIf(e -> e == ncc);
         }
         return check;
     }

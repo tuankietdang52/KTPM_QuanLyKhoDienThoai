@@ -759,7 +759,7 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`manv`, `hoten`, `gioitinh`, `ngaysinh`, `sdt`, `email`, `trangthai`) VALUES
-(1, 'Trần Nhật Sinh', 1, '2003-12-20', '0387913347', 'transinh085@gmail.com', -1),
+(1, 'Hưng Nguyễn', 1, '2003-12-20', '0387913347', 'transinh085@gmail.com', -1),
 (2, 'Khôi Duy', 1, '2023-04-11', '0355374322', 'khoiduy123@gmail.com', 1),
 (3, 'Tuấn Kiệt', 1, '2003-04-11', '0123456789', 'tuankiet123@gmail.com', 1),
 (4, 'lmao', 1, '2003-04-03', '0123456789', 'lmao@gmail.com', 1),

@@ -32,7 +32,7 @@ public class MauSacBUS extends BaseBUS<MauSacDTO>{
     public boolean delete(MauSacDTO msac) {
         boolean check = DAO.delete(Integer.toString(msac.getMamau())) != 0;
         if (check) {
-            list.remove(msac);
+            list.removeIf(e -> e == msac);;
         }
         return check;
     }

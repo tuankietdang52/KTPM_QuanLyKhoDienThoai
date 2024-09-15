@@ -24,7 +24,7 @@ public class HeDieuHanhBUS extends BaseBUS<HeDieuHanhDTO>{
     public boolean delete(HeDieuHanhDTO hdh) {
         boolean check = DAO.delete(Integer.toString(hdh.getMahdh())) != 0;
         if (check) {
-            list.remove(hdh);
+            list.removeIf(e -> e == hdh);
         }
         return check;
     }

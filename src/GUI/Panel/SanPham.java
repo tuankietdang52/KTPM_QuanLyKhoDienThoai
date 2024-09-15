@@ -150,10 +150,17 @@ public final class SanPham extends JPanel implements ActionListener {
             int index = getRowSelected();
             if (index != -1) {
                 int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa Sản phẩm :)!", "Xóa sản phẩm", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if (input == 0) {
-                    spBUS.delete(listSP.get(index));
-                    loadDataTalbe(listSP);
+                if (input != 0) return;
+
+                var sp = listSP.get(index);
+
+                if (sp.getSoluongton() != 0) {
+                    JOptionPane.showMessageDialog(null, "Số lượng tồn kho vẫn còn. Không thể xóa");
+                    return;
                 }
+                
+                spBUS.delete(listSP.get(index));
+                loadDataTalbe(listSP);
             }
         } else if (e.getSource() == mainFunction.btn.get("detail")) {
             int index = getRowSelected();

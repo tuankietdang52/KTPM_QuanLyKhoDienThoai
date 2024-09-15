@@ -28,7 +28,7 @@ public class XuatXuBUS extends BaseBUS<XuatXuDTO>{
     public boolean delete(XuatXuDTO xuatxu) {
         boolean check = DAO.delete(Integer.toString(xuatxu.getMaxuatxu())) != 0;
         if (check) {
-            list.remove(xuatxu);
+            list.removeIf(e -> e == xuatxu);
         }
         return check;
     }

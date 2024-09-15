@@ -5,6 +5,8 @@ import DTO.PhienBanSanPhamDTO;
 import DTO.SanPhamDTO;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class SanPhamBUS extends BaseBUS<SanPhamDTO>{
 
     public final SanPhamDAO spDAO = new SanPhamDAO();
@@ -59,7 +61,7 @@ public class SanPhamBUS extends BaseBUS<SanPhamDTO>{
     public boolean delete(SanPhamDTO lh) {
         boolean check = spDAO.delete(Integer.toString(lh.getMasp())) != 0;
         if (check) {
-            this.list.remove(lh);
+            list.removeIf(e -> e == lh);
         }
         return check;
     }

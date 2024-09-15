@@ -35,7 +35,7 @@ public class KhuVucKhoBUS extends BaseBUS<KhuVucKhoDTO>{
     public boolean delete(KhuVucKhoDTO kvk) {
         boolean check = DAO.delete(Integer.toString(kvk.getMakhuvuc())) != 0;
         if (check) {
-            list.remove(kvk);
+            list.removeIf(e -> e == kvk);
         }
         return check;
     }

@@ -56,6 +56,7 @@ public class TaiKhoanBUS {
     public void deleteAcc(int manv){
         
     }
+
     public ArrayList<TaiKhoanDTO> search(String txt, String type) {
         ArrayList<TaiKhoanDTO> result = new ArrayList<>();
         txt = txt.toLowerCase();
