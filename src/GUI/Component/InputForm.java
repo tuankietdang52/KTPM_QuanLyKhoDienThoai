@@ -27,6 +27,7 @@ public final class InputForm extends JPanel {
     private JPasswordField txtPass;
 
     public InputForm() {
+
     }
 
     public InputForm(String title) {
@@ -38,6 +39,19 @@ public final class InputForm extends JPanel {
         txtForm = new JTextField();
         this.add(lblTitle);
         this.add(txtForm);
+    }
+
+    public InputForm(String title, boolean isEditable){
+        this.setLayout(new GridLayout(2, 1));
+        this.setBackground(Color.white);
+        this.setBorder(new EmptyBorder(0, 10, 5, 10));
+        this.setPreferredSize(new Dimension(100, 100));
+        lblTitle = new JLabel(title);
+        txtForm = new JTextField();
+        this.add(lblTitle);
+        this.add(txtForm);
+
+        if (!isEditable) setDisable();
     }
 
     public InputForm(String title, String style) {

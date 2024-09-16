@@ -121,6 +121,8 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     }
 
     public void initCardOne(String type) {
+        boolean isEditable = type != "update";
+
         pnCenter = new JPanel(new BorderLayout());
         pninfosanpham = new JPanel(new GridLayout(3, 4, 0, 0));
         pninfosanpham.setBackground(Color.WHITE);
@@ -132,25 +134,25 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
         pninfosanphamright.setBorder(new EmptyBorder(0, 10, 0, 10));
         pnCenter.add(pninfosanphamright, BorderLayout.WEST);
 
-        tenSP = new InputForm("Tên sản phẩm");
-        xuatxu = new SelectForm("Xuất xứ", arrXX);
-        chipxuly = new InputForm("Chip xử lý");
-        dungluongpin = new InputForm("Dung lượng pin");
+        tenSP = new InputForm("Tên sản phẩm", isEditable);
+        xuatxu = new SelectForm("Xuất xứ", arrXX, isEditable);
+        chipxuly = new InputForm("Chip xử lý", isEditable);
+        dungluongpin = new InputForm("Dung lượng pin", isEditable);
         PlainDocument pin = (PlainDocument)dungluongpin.getTxtForm().getDocument();
         pin.setDocumentFilter((new NumericDocumentFilter()));
-        kichthuocman = new InputForm("Kích thước màn");
+        kichthuocman = new InputForm("Kích thước màn", isEditable);
         phienbanhdh = new InputForm("Phiên bản hđh");
         PlainDocument pbhdh = (PlainDocument)phienbanhdh.getTxtForm().getDocument();
         pbhdh.setDocumentFilter((new NumericDocumentFilter()));
         thoigianbaohanh = new InputForm("Thời gian bảo hành");
         PlainDocument baohanh = (PlainDocument)thoigianbaohanh.getTxtForm().getDocument();
         baohanh.setDocumentFilter((new NumericDocumentFilter()));
-        camerasau = new InputForm("Camera sau");
-        cameratruoc = new InputForm("Camera trước");
+        camerasau = new InputForm("Camera sau", isEditable);
+        cameratruoc = new InputForm("Camera trước", isEditable);
 //        String[] arrhdh = arrhHDH;
-        hedieuhanh = new SelectForm("Hệ điều hành", arrhHDH);
-        thuonghieu = new SelectForm("Thương hiệu", arrthuonghieu);
-        khuvuc = new SelectForm("Khu vực kho", arrkhuvuc);
+        hedieuhanh = new SelectForm("Hệ điều hành", arrhHDH, isEditable);
+        thuonghieu = new SelectForm("Thương hiệu", arrthuonghieu, isEditable);
+        khuvuc = new SelectForm("Khu vực kho", arrkhuvuc, isEditable);
         hinhanh = new InputImage("Hình minh họa");
 
         pninfosanpham.add(tenSP);
