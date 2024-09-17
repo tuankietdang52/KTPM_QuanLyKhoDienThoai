@@ -233,6 +233,7 @@ public final class NhaCungCap extends JPanel implements ActionListener, ItemList
             int index = getRowSelected();
             if (index != -1) {
                 NhaCungCapDialog nccDialog = new NhaCungCapDialog(this, owner, "Chỉnh sửa nhà cung cấp", true, "update", listncc.get(index));
+                loadDataTable(listncc);
             }
         } else if (e.getSource() == mainFunction.btn.get("delete")) {
             int index = getRowSelected();
