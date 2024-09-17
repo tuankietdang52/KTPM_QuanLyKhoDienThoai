@@ -255,7 +255,8 @@ public class NhanVienDialog extends JDialog {
             JOptionPane.showMessageDialog(this, "Email không được rỗng và phải đúng cú pháp", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        else if (Validation.isEmpty(sdt.getText()) && !Validation.isNumber(sdt.getText()) && sdt.getText().length() != 10) {
+        else if (Validation.isEmpty(sdt.getText()) && !Validation.isNumber(sdt.getText()) || (int)sdt.getText().length() != 10) {
+            System.out.println(sdt.getText().length());
             JOptionPane.showMessageDialog(this, "Số điện thoại không được rỗng và phải là 10 ký tự số", "Cảnh báo !", JOptionPane.WARNING_MESSAGE);
             return false;
         } else if(jcBd.getDate()==null){
