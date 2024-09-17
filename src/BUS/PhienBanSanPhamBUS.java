@@ -3,6 +3,8 @@ package BUS;
 import DAO.PhienBanSanPhamDAO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.PhienBanSanPhamDTO;
+import ultils.Pair;
+
 import java.util.ArrayList;
 
 /**

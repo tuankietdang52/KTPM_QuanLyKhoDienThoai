@@ -478,7 +478,7 @@ public final class TaoPhieuXuat extends JPanel {
         pn_tongtien.setOpaque(false);
         JLabel lbltien = new JLabel("TỔNG TIỀN: ");
         lbltien.setFont(new Font(FlatRobotoFont.FAMILY, 1, 18));
-        lbltongtien = new JLabel("0đ");
+        lbltongtien = new JLabel("0");
         lbltongtien.setFont(new Font(FlatRobotoFont.FAMILY, 1, 18));
         lbltien.setForeground(new Color(255, 51, 51));
         pn_tongtien.add(lbltien);
@@ -599,9 +599,11 @@ public final class TaoPhieuXuat extends JPanel {
     }
 
     public int getChiTietSp() {
+        int price = Integer.parseInt(txtGiaXuat.getText());
+
         String[] arrimei = textAreaImei.getText().split("\n");
         for (int i = 0; i < arrimei.length; i++) {
-            ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(arrimei[i], mapb, 0, maphieu, 0);
+            ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(arrimei[i], mapb, 0, maphieu, 0, 0, price);
             chitietsanpham.add(ct);
         }
         return arrimei.length;
@@ -632,7 +634,8 @@ public final class TaoPhieuXuat extends JPanel {
     public void setImeiByPb(int mapb) {
         ctpb = ChiTietSanPhamDAO.getInstance().selectAllbyPb(mapb);
         PhienBanSanPhamDTO pbsp = phienBanBus.getByMaPhienBan(mapb);
-        txtGiaXuat.setText(pbsp.getGiaxuat() + "");
+        // txtGiaXuat.setText(pbsp.getGiaxuat() + "");
+        txtGiaXuat.setText("0");
         txtSoluongTon.setText(pbsp.getSoluongton()+"");
         textAreaImei.setText("");
         for (int i = 0; i < ctpb.size(); i++) {

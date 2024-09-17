@@ -3,6 +3,8 @@ package BUS;
 import DAO.ChiTietSanPhamDAO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.PhienBanSanPhamDTO;
+import ultils.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -101,5 +103,9 @@ public class ChiTietSanPhamBUS {
                 result.add(i);
         }
         return result;
+    }
+
+     public Pair<Integer, Integer> getImportAndExportPrice(String imeicode){
+        return ctspDAO.getImportAndExportPrices(imeicode);
     }
 }

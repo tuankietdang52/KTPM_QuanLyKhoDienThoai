@@ -169,7 +169,9 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
                 int maphieunhap = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang);
+                int gianhap = rs.getInt("gianhap");
+                int giaxuat = rs.getInt("giaxuat");
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang, gianhap, giaxuat);
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -210,7 +212,8 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
         int result = -1;
         try {
             Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'quanlikhohang' AND TABLE_NAME   = 'phieunhap'";
+            // String sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'quanlikhohang' AND TABLE_NAME   = 'phieunhap'";
+            String sql = "SELECT MAX(maphieunhap) + 1 AS AUTO_INCREMENT FROM phieunhap";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs2 = pst.executeQuery(sql);
             if (!rs2.isBeforeFirst()) {

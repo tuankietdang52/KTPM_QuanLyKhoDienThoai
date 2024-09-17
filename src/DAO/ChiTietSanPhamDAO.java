@@ -3,6 +3,9 @@ package DAO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.KhuVucKhoDTO;
 import config.JDBCUtil;
+import ultils.Pair;
+
+import java.io.Console;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,6 +36,7 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
             pst.setInt(2, t.getMaphienbansp());
             pst.setInt(3, t.getMaphieunhap());
             pst.setInt(4, t.getTinhtrang());
+
             result = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (SQLException ex) {
@@ -78,6 +82,7 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
             pst.setInt(1, t.getMaphieuxuat());
             pst.setInt(2, t.getTinhtrang());
             pst.setString(3, t.getImei());
+
             result = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (SQLException ex) {
@@ -141,11 +146,17 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 String imei = rs.getString("maimei");
-                int macauhinh = rs.getInt("phienbansp");
+                int macauhinh = rs.getInt("maphienbansp");
                 int maphieunhap = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang);
+
+                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
+
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
+                    imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang, 
+                    prices.getFirst(), prices.getLast());
+
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -169,7 +180,13 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieunhap = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
+                
+                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
+
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang, 
+                    prices.getFirst(), prices.getLast());
+
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -192,7 +209,13 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieunhap = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
+                
+                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
+
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang, 
+                    prices.getFirst(), prices.getLast());
+
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -216,7 +239,13 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieunhap = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
+                
+                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
+
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang, 
+                    prices.getFirst(), prices.getLast());
+
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -269,7 +298,13 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int mapn = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, maphienban, mapn, maphieuxuat, tinhtrang);
+
+                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
+
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
+                    imei, maphienban, mapn, maphieuxuat, tinhtrang, 
+                    prices.getFirst(), prices.getLast());
+                
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -279,21 +314,27 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
         return result;
     }
     
-    public ArrayList<ChiTietSanPhamDTO> selectAllByMaPhieuXuat(int maphieunhap) {
+    public ArrayList<ChiTietSanPhamDTO> selectAllByMaPhieuXuat(int maphieuxuat) {
         ArrayList<ChiTietSanPhamDTO> result = new ArrayList<>();
         try {
             Connection con = (Connection) JDBCUtil.getConnection();
             String sql = "SELECT * FROM ctsanpham where maphieuxuat = ?";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, maphieunhap);
+            pst.setInt(1, maphieuxuat);
             ResultSet rs = (ResultSet) pst.executeQuery();
             while (rs.next()) {
                 String imei = rs.getString("maimei");
                 int maphienban = rs.getInt("maphienbansp");
                 int mapn = rs.getInt("maphieunhap");
-                int maphieuxuat = rs.getInt("maphieuxuat");
+                int mapx = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, maphienban, mapn, maphieuxuat, tinhtrang);
+                
+                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
+
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
+                    imei, maphienban, mapn, mapx, tinhtrang, 
+                    prices.getFirst(), prices.getLast());
+
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);
@@ -302,5 +343,76 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
         }
         return result;
     }
+
+    public Pair<Integer, Integer> getImportAndExportPrices(String imeiCode){
+        Connection con;
+        Pair<Integer, Integer> ans = new Pair<Integer,Integer>(0, 0);
+
+        try{
+            con = (Connection) JDBCUtil.getConnection();
+            ans.setFirst(getImportPrice(con, imeiCode));
+            ans.setLast(getExportPrice(con, imeiCode));
+        }
+        catch (Exception ex){
+
+        }
+
+        return ans;
+    }
     
+    private Pair<Integer, Integer> getImportAndExportPrices(Connection con, String imeiCode){
+        return new Pair<Integer,Integer>(getImportPrice(con, imeiCode), getExportPrice(con, imeiCode));
+    }
+
+    private int getImportPrice(Connection con, String imeiCode){
+        String query = "SELECT dongia " +
+                        "FROM ctsanpham " +
+                        "INNER JOIN ctphieunhap " +
+                        "ON ctsanpham.maphienbansp = ctphieunhap.maphienbansp " +
+                        "AND ctsanpham.maphieunhap = ctphieunhap.maphieunhap " +
+                        "AND ctsanpham.maimei = '" + imeiCode + "'";
+
+        int price = 0;
+
+        try{
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(query);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+
+            while (rs.next()) {
+                price = rs.getInt("dongia");
+            }
+        }
+        catch (Exception ex){
+            System.out.println(ex);
+            return 0;
+        }
+
+        return price;
+    }
+
+    private int getExportPrice(Connection con, String imeiCode){
+        String query = "SELECT dongia " +
+                        "FROM ctsanpham " +
+                        "INNER JOIN ctphieuxuat " +
+                        "ON ctsanpham.maphienbansp = ctphieuxuat.maphienbansp " +
+                        "AND ctsanpham.maphieuxuat = ctphieuxuat.maphieuxuat " +
+                        "AND ctsanpham.maimei = '" + imeiCode + "'";
+
+        int price = 0;
+
+        try{
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(query);
+            ResultSet rs = (ResultSet) pst.executeQuery();
+
+            while (rs.next()) {
+                price = rs.getInt("dongia");
+            }
+        }
+        catch (Exception ex){
+            System.out.println(ex);
+            return 0;
+        }
+
+        return price;
+    }
 }

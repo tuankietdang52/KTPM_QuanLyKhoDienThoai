@@ -11,6 +11,8 @@ import DTO.SanPhamDTO;
 import GUI.Component.HeaderTitle;
 import GUI.Component.InputForm;
 import GUI.Component.SelectForm;
+import ultils.Pair;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -109,7 +111,7 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         table = new JTable();
         scrollTable = new JScrollPane();
         tblModel = new DefaultTableModel();
-        String[] header = new String[]{"Imei", "Mã phiếu nhập", "Mã phiếu xuất", "Tình trạng"};
+        String[] header = new String[]{"Imei", "Mã phiếu nhập", "Mã phiếu xuất", "Tình trạng", "Giá nhập", "Giá xuất"};
         tblModel.setColumnIdentifiers(header);
         listctsp = ctspbus.FilterPBvaAll(txtSearch.getText(), spdto.getMasp(), ch.get(cbxPhienBan.cbb.getSelectedIndex()).getMaphienbansp());
         table.setModel(tblModel);
@@ -121,6 +123,8 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         columnModel.getColumn(1).setCellRenderer(centerRenderer);
         columnModel.getColumn(2).setCellRenderer(centerRenderer);
         columnModel.getColumn(3).setCellRenderer(centerRenderer);
+        columnModel.getColumn(4).setCellRenderer(centerRenderer);
+        columnModel.getColumn(5).setCellRenderer(centerRenderer);
         pnmain_bottom.add(scrollTable);
 
         pnmain.add(pnmain_top, BorderLayout.NORTH);
@@ -133,12 +137,24 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
 
     public void loadDataTable(ArrayList<ChiTietSanPhamDTO> result) {
         tblModel.setRowCount(0);
+
         for (ChiTietSanPhamDTO ctsp : result) {
+            var prices = loadPrices(ctsp);
+
             tblModel.addRow(new Object[]{
-                ctsp.getImei(), ctsp.getMaphieunhap(), ctsp.getMaphieuxuat() == 0 ? "Chưa xuất kho" : ctsp.getMaphieuxuat(), ctsp.getTinhtrang() == 1 ? "Tồn kho" : "Đã bán"
+                ctsp.getImei(),
+                ctsp.getMaphieunhap(), 
+                ctsp.getMaphieuxuat() == 0 ? "Chưa xuất kho" : ctsp.getMaphieuxuat(), 
+                ctsp.getTinhtrang() == 1 ? "Tồn kho" : "Đã bán",
+                prices.getFirst(),
+                prices.getLast()
             });
         }
         this.txtSoluong.setText(result.size()+"");
+    }
+
+    private Pair<Integer, Integer> loadPrices(ChiTietSanPhamDTO ctsp){
+        return ctspbus.getImportAndExportPrice(ctsp.getImei());
     }
 
     public String[] getCauHinhPhienBan(int masp) {

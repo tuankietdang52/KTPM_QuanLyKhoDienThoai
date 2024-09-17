@@ -3,6 +3,8 @@ package DAO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.PhienBanSanPhamDTO;
 import config.JDBCUtil;
+import ultils.Pair;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -27,16 +29,14 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
         for (int i = 0; i < t.size(); i++) {
             try {
                 Connection con = (Connection) JDBCUtil.getConnection();
-                String sql = "INSERT INTO `phienbansanpham`(`maphienbansp`, `masp`, `rom`, `ram`, `mausac`, `gianhap`, `giaxuat`,`soluongton`) VALUES (?,?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO `phienbansanpham`(`maphienbansp`, `masp`, `rom`, `ram`, `mausac`, `soluongton`) VALUES (?,?,?,?,?,?)";
                 PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
                 pst.setInt(1, t.get(i).getMaphienbansp());
                 pst.setInt(2, t.get(i).getMasp());
                 pst.setInt(3, t.get(i).getRom());
                 pst.setInt(4, t.get(i).getRam());
                 pst.setInt(5, t.get(i).getMausac());
-                pst.setInt(6, t.get(i).getGianhap());
-                pst.setInt(7, t.get(i).getGiaxuat());
-                pst.setInt(8, t.get(i).getSoluongton());
+                pst.setInt(6, t.get(i).getSoluongton());
                 result = pst.executeUpdate();
                 JDBCUtil.closeConnection(con);
             } catch (SQLException ex) {
@@ -50,15 +50,13 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
         int result = 0;
         try {
             Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "INSERT INTO `phienbansanpham`(`maphienbansp`, `masp`, `rom`, `ram`, `mausac`, `gianhap`, `giaxuat`) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO `phienbansanpham`(`maphienbansp`, `masp`, `rom`, `ram`, `mausac`) VALUES (?,?,?,?,?)";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setInt(1, t.getMaphienbansp());
             pst.setInt(2, t.getMasp());
             pst.setInt(3, t.getRom());
             pst.setInt(4, t.getRam());
             pst.setInt(5, t.getMausac());
-            pst.setInt(6, t.getGianhap());
-            pst.setInt(7, t.getGiaxuat());
             result = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (SQLException ex) {
@@ -92,14 +90,12 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
         int result = 0;
         try {
             Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "UPDATE `phienbansanpham` SET `rom`=?,`ram`=?,`mausac`=?,`gianhap`=?,`giaxuat`=? WHERE maphienbansp=?";
+            String sql = "UPDATE `phienbansanpham` SET `rom`=?,`ram`=?,`mausac`=? WHERE maphienbansp=?";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setInt(1, ch.getRom());
             pst.setInt(2, ch.getRam());
             pst.setInt(3, ch.getMausac());
-            pst.setInt(4, ch.getGianhap());
-            pst.setInt(5, ch.getGiaxuat());
-            pst.setInt(6, ch.getMaphienbansp());
+            pst.setInt(4, ch.getMaphienbansp());
             result = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (SQLException ex) {
@@ -124,10 +120,8 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
                 int ram = rs.getInt("ram");
                 int mausac = rs.getInt("mausac");
                 int rom = rs.getInt("rom");
-                int gianhap = rs.getInt("gianhap");
-                int giaxuat = rs.getInt("giaxuat");
                 int soluongton = rs.getInt("soluongton");
-                PhienBanSanPhamDTO ch = new PhienBanSanPhamDTO(maphienbansp, masp, ram, rom, mausac, gianhap, giaxuat, soluongton);
+                PhienBanSanPhamDTO ch = new PhienBanSanPhamDTO(maphienbansp, masp, ram, rom, mausac, soluongton);
                 result.add(ch);
             }
             JDBCUtil.closeConnection(con);
@@ -150,10 +144,8 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
                 int ram = rs.getInt("ram");
                 int mausac = rs.getInt("mausac");
                 int rom = rs.getInt("rom");
-                int gianhap = rs.getInt("gianhap");
-                int giaxuat = rs.getInt("giaxuat");
                 int soluongton = rs.getInt("soluongton");
-                PhienBanSanPhamDTO ch = new PhienBanSanPhamDTO(maphienbansp, masp, ram, rom, mausac, gianhap, giaxuat, soluongton);
+                PhienBanSanPhamDTO ch = new PhienBanSanPhamDTO(maphienbansp, masp, ram, rom, mausac, soluongton);
                 result.add(ch);
             }
             JDBCUtil.closeConnection(con);
@@ -176,10 +168,8 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
                 int ram = rs.getInt("ram");
                 int mausac = rs.getInt("mausac");
                 int rom = rs.getInt("rom");
-                int gianhap = rs.getInt("gianhap");
-                int giaxuat = rs.getInt("giaxuat");
                 int soluongton = rs.getInt("soluongton");
-                ch = new PhienBanSanPhamDTO(maphienbansp, masp, ram, rom, mausac, gianhap, giaxuat, soluongton);
+                ch = new PhienBanSanPhamDTO(maphienbansp, masp, ram, rom, mausac, soluongton);
             }
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
@@ -211,7 +201,8 @@ public class PhienBanSanPhamDAO implements ChiTietInterface<PhienBanSanPhamDTO> 
         int result = -1;
         try {
             Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'quanlikhohang' AND TABLE_NAME = 'phienbansanpham'";
+            // String sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'quanlikhohang' AND TABLE_NAME = 'phienbansanpham'";
+            String sql = "SELECT MAX(maphienbansp) + 1 AS AUTO_INCREMENT FROM phienbansanpham";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs2 = pst.executeQuery(sql);
             if (!rs2.isBeforeFirst()) {

@@ -15,32 +15,26 @@ public class PhienBanSanPhamDTO {
     private int ram;
     private int rom;
     private int mausac;
-    private int gianhap;
-    private int giaxuat;
     private int soluongton;
 
     public PhienBanSanPhamDTO() {
     }
 
-    public PhienBanSanPhamDTO(int maphienbansp, int masp, int ram, int rom, int mausac, int gianhap, int giaxuat, int soluongton) {
+    public PhienBanSanPhamDTO(int maphienbansp, int masp, int ram, int rom, int mausac, int soluongton) {
         this.maphienbansp = maphienbansp;
         this.masp = masp;
         this.ram = ram;
         this.rom = rom;
         this.mausac = mausac;
-        this.gianhap = gianhap;
-        this.giaxuat = giaxuat;
         this.soluongton = soluongton;
     }
     
-    public PhienBanSanPhamDTO(int maphienbansp, int masp, int ram, int rom, int mausac, int gianhap, int giaxuat) {
+    public PhienBanSanPhamDTO(int maphienbansp, int masp, int ram, int rom, int mausac) {
         this.maphienbansp = maphienbansp;
         this.masp = masp;
         this.ram = ram;
         this.rom = rom;
         this.mausac = mausac;
-        this.gianhap = gianhap;
-        this.giaxuat = giaxuat;
     }
 
     public int getMaphienbansp() {
@@ -83,22 +77,6 @@ public class PhienBanSanPhamDTO {
         this.mausac = mausac;
     }
 
-    public int getGianhap() {
-        return gianhap;
-    }
-
-    public void setGianhap(int gianhap) {
-        this.gianhap = gianhap;
-    }
-
-    public int getGiaxuat() {
-        return giaxuat;
-    }
-
-    public void setGiaxuat(int giaxuat) {
-        this.giaxuat = giaxuat;
-    }
-
     public int getSoluongton() {
         return soluongton;
     }
@@ -115,8 +93,6 @@ public class PhienBanSanPhamDTO {
         hash = 53 * hash + this.ram;
         hash = 53 * hash + this.rom;
         hash = 53 * hash + this.mausac;
-        hash = 53 * hash + this.gianhap;
-        hash = 53 * hash + this.giaxuat;
         hash = 53 * hash + this.soluongton;
         return hash;
     }
@@ -144,7 +120,7 @@ public class PhienBanSanPhamDTO {
 
     @Override
     public String toString() {
-        return "PhienBanSanPhamDTO{" + "maphienbansp=" + maphienbansp + ", masp=" + masp + ", ram=" + ram + ", rom=" + rom + ", mausac=" + mausac + ", gianhap=" + gianhap + ", giaxuat=" + giaxuat + ", soluongton=" + soluongton + '}';
+        return "PhienBanSanPhamDTO{" + "maphienbansp=" + maphienbansp + ", masp=" + masp + ", ram=" + ram + ", rom=" + rom + ", mausac=" + mausac + ", soluongton=" + soluongton + '}';
     }
 
     
