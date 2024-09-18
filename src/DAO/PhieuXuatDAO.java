@@ -198,6 +198,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
             } else {
                 while ( rs2.next() ) {
                     result = rs2.getInt("AUTO_INCREMENT");
+                    result = result == 0 ? 1 : result;
                 }
             }
         } catch (SQLException ex) {
