@@ -1,7 +1,9 @@
 package BUS;
 
 import DAO.HeDieuHanhDAO;
+import DAO.XuatXuDAO;
 import DTO.ThuocTinhSanPham.HeDieuHanhDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
 
 /**
  *
@@ -67,6 +69,11 @@ public class HeDieuHanhBUS extends BaseBUS<HeDieuHanhDTO>{
             else i++;
         }
         return check;
+    }
+
+    public boolean isUsingByProduct(HeDieuHanhDTO model){
+        HeDieuHanhDAO hdhDAO = (HeDieuHanhDAO) DAO;  
+        return hdhDAO.isUsing(model);
     }
 
 }

@@ -8,6 +8,7 @@ import BUS.DungLuongRamBUS;
 import BUS.NhomQuyenBUS;
 import DAO.DungLuongRamDAO;
 import DTO.ThuocTinhSanPham.DungLuongRamDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
 import GUI.Component.ButtonCustom;
 import GUI.Component.HeaderTitle;
 import GUI.Component.InputForm;
@@ -151,14 +152,12 @@ public final class DungLuongRamDialog extends JDialog implements MouseListener {
                     JOptionPane.showMessageDialog(this, "Dung lượng đã tồn tại !");
                 }
             }
-        } else if (e.getSource() == del) {
+        } 
+        else if (e.getSource() == del) {
             int index = getRowSelected();
-            if (index != -1) {
-                dlrBUS.delete(list.get(index));
-                loadDataTable(list);
-                ms.setText("");
-            }
-        } else if (e.getSource() == update) {
+            if (index != -1) deleteModel(index);
+        } 
+        else if (e.getSource() == update) {
             int index = getRowSelected();
             if (index != -1) {
                 if (Validation.isEmpty(ms.getText())) {
@@ -178,6 +177,17 @@ public final class DungLuongRamDialog extends JDialog implements MouseListener {
             int index = table.getSelectedRow();
             ms.setText(String.valueOf(list.get(index).getDungluongram()));
         }
+    }
+
+     private void deleteModel(int index) {
+        DungLuongRamDTO model = list.get(index);
+        if (dlrBUS.isUsingByProduct(model)){
+            JOptionPane.showMessageDialog(null, "RAM đang được sử dụng bởi sản phẩm");
+            return;
+        }
+        dlrBUS.delete(model);
+        loadDataTable(list);
+        ms.setText("");
     }
 
     public int getRowSelected() {

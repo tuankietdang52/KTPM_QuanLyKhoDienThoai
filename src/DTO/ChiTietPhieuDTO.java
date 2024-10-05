@@ -14,12 +14,12 @@ public class ChiTietPhieuDTO {
     private int maphieu;
     private int maphienbansp;
     private int soluong;
-    private int dongia;
+    private long dongia;
 
     public ChiTietPhieuDTO() {
     }
 
-    public ChiTietPhieuDTO(int maphieu, int maphienbansp, int soluong, int dongia) {
+    public ChiTietPhieuDTO(int maphieu, int maphienbansp, int soluong, long dongia) {
         this.maphieu = maphieu;
         this.maphienbansp = maphienbansp;
         this.soluong = soluong;
@@ -50,11 +50,11 @@ public class ChiTietPhieuDTO {
         this.soluong = soluong;
     }
 
-    public int getDongia() {
+    public long getDongia() {
         return dongia;
     }
 
-    public void setDongia(int dongia) {
+    public void setDongia(long dongia) {
         this.dongia = dongia;
     }
 
@@ -64,7 +64,7 @@ public class ChiTietPhieuDTO {
         hash = 19 * hash + this.maphieu;
         hash = 19 * hash + this.maphienbansp;
         hash = 19 * hash + this.soluong;
-        hash = 19 * hash + this.dongia;
+        hash = 19 * hash + Objects.hashCode(this.dongia);
         return hash;
     }
 

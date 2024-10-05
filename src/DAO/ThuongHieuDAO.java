@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import DTO.ThuocTinhSanPham.MauSacDTO;
 import DTO.ThuocTinhSanPham.ThuongHieuDTO;
 import config.JDBCUtil;
 import java.sql.Connection;
@@ -128,6 +129,27 @@ public class ThuongHieuDAO implements DAOinterface<ThuongHieuDTO>{
         } catch (SQLException ex) {
             Logger.getLogger(ThuongHieuDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
+    }
+
+    public boolean isUsing(ThuongHieuDTO model){
+        boolean result = false;
+        int id = model.getMathuonghieu();
+
+        try {
+            Connection con = (Connection) JDBCUtil.getConnection();
+            String sql = "SELECT thuonghieu " + 
+                         "FROM sanpham " + 
+                         "WHERE thuonghieu = " + id;
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            result = rs.next();     
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(KhuVucKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        }
+        
         return result;
     }
     

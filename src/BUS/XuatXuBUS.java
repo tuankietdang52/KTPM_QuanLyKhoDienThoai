@@ -69,4 +69,9 @@ public class XuatXuBUS extends BaseBUS<XuatXuDTO>{
         }
         return check;
     }
+
+    public boolean isUsingByProduct(XuatXuDTO model){
+        XuatXuDAO xuatXuDAO = (XuatXuDAO) DAO;  
+        return xuatXuDAO.isUsing(model);
+    }
 }

@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import DTO.ThuocTinhSanPham.DungLuongRamDTO;
 import DTO.ThuocTinhSanPham.XuatXuDTO;
 import config.JDBCUtil;
 import java.sql.Connection;
@@ -132,6 +133,27 @@ public class XuatXuDAO implements DAOinterface<XuatXuDTO>{
         } catch (SQLException ex) {
             Logger.getLogger(XuatXuDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
+    }
+
+    public boolean isUsing(XuatXuDTO model){
+        boolean result = false;
+        int id = model.getMaxuatxu();
+
+        try {
+            Connection con = (Connection) JDBCUtil.getConnection();
+            String sql = "SELECT xuatxu " + 
+                         "FROM sanpham " + 
+                         "WHERE xuatxu = " + id;
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            result = rs.next();     
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(KhuVucKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        }
+        
         return result;
     }
 }

@@ -4,6 +4,7 @@ import BUS.MauSacBUS;
 import BUS.NhomQuyenBUS;
 import DAO.MauSacDAO;
 import DTO.ThuocTinhSanPham.MauSacDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
 import GUI.Component.ButtonCustom;
 import GUI.Component.HeaderTitle;
 import GUI.Component.InputForm;
@@ -144,14 +145,12 @@ public class MauSacDialog extends JDialog implements MouseListener {
                     JOptionPane.showMessageDialog(this, "Màu sắc đã tồn tại !");
                 }
             }
-        } else if (e.getSource() == del) {
+        } 
+        else if (e.getSource() == del) {
             int index = getRowSelected();
-            if (index != -1) {
-                msBUS.delete(list.get(index));
-                loadDataTable(list);
-                ms.setText("");
-            }
-        } else if (e.getSource() == update) {
+            if (index != -1) deleteModel(index);
+        } 
+        else if (e.getSource() == update) {
             int index = getRowSelected();
             if (index != -1) {
                 if (Validation.isEmpty(ms.getText())) {
@@ -171,6 +170,17 @@ public class MauSacDialog extends JDialog implements MouseListener {
             int index = table.getSelectedRow();
             ms.setText(list.get(index).getTenmau());
         }
+    }
+
+     private void deleteModel(int index) {
+        MauSacDTO model = list.get(index);
+        if (msBUS.isUsingByProduct(model)){
+            JOptionPane.showMessageDialog(null, "Màu sắc đang được sử dụng bởi sản phẩm");
+            return;
+        }
+        msBUS.delete(model);
+        loadDataTable(list);
+        ms.setText("");
     }
 
     public int getRowSelected() {

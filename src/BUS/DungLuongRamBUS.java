@@ -5,7 +5,9 @@
 package BUS;
 
 import DAO.DungLuongRamDAO;
+import DAO.XuatXuDAO;
 import DTO.ThuocTinhSanPham.DungLuongRamDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
 
 /**
  *
@@ -74,5 +76,10 @@ public class DungLuongRamBUS extends BaseBUS<DungLuongRamDTO> {
             result[i] = Integer.toString(list.get(i).getDungluongram())+"GB";
         }
         return result;
+    }
+
+    public boolean isUsingByProduct(DungLuongRamDTO model){
+        DungLuongRamDAO ramDAO = (DungLuongRamDAO) DAO;  
+        return ramDAO.isUsing(model);
     }
 }

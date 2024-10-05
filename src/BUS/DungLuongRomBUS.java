@@ -5,7 +5,9 @@
 package BUS;
 
 import DAO.DungLuongRomDAO;
+import DAO.XuatXuDAO;
 import DTO.ThuocTinhSanPham.DungLuongRomDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
 
 /**
  *
@@ -74,5 +76,10 @@ public class DungLuongRomBUS extends BaseBUS<DungLuongRomDTO>{
             else i++;
         }
         return check;
+    }
+
+    public boolean isUsingByProduct(DungLuongRomDTO model){
+        DungLuongRomDAO romDAO = (DungLuongRomDAO) DAO;  
+        return romDAO.isUsing(model);
     }
 }

@@ -5,7 +5,9 @@
 package BUS;
 
 import DAO.MauSacDAO;
+import DAO.XuatXuDAO;
 import DTO.ThuocTinhSanPham.MauSacDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
 
 /**
  *
@@ -76,5 +78,10 @@ public class MauSacBUS extends BaseBUS<MauSacDTO>{
             else i++;
         }
         return check;
+    }
+
+    public boolean isUsingByProduct(MauSacDTO model){
+        MauSacDAO colorDAO = (MauSacDAO) DAO;  
+        return colorDAO.isUsing(model);
     }
 }

@@ -5,6 +5,8 @@
 package DAO;
 
 import DTO.ThuocTinhSanPham.DungLuongRomDTO;
+import DTO.ThuocTinhSanPham.MauSacDTO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -137,4 +139,24 @@ public class DungLuongRomDAO implements DAOinterface<DungLuongRomDTO> {
         return result;
     }
 
+    public boolean isUsing(DungLuongRomDTO model){
+        boolean result = false;
+        int id = model.getMadungluongrom();
+
+        try {
+            Connection con = (Connection) JDBCUtil.getConnection();
+            String sql = "SELECT rom " + 
+                         "FROM phienbansanpham " + 
+                         "WHERE rom = " + id;
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            result = rs.next();     
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(KhuVucKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        }
+        
+        return result;
+    }
 }

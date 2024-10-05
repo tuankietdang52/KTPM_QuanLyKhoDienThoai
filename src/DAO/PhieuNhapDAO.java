@@ -169,9 +169,7 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
                 int maphieunhap = rs.getInt("maphieunhap");
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                int gianhap = rs.getInt("gianhap");
-                int giaxuat = rs.getInt("giaxuat");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang, gianhap, giaxuat);
+                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang);
                 result.add(ct);
             }
             JDBCUtil.closeConnection(con);

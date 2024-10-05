@@ -5,7 +5,10 @@
 package BUS;
 
 import DAO.ThuongHieuDAO;
+import DAO.XuatXuDAO;
 import DTO.ThuocTinhSanPham.ThuongHieuDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
+
 import java.util.ArrayList;
 
 /**
@@ -91,5 +94,10 @@ public class ThuongHieuBUS extends BaseBUS<ThuongHieuDTO>{
             else i++;
         }
         return check;
+    }
+
+    public boolean isUsingByProduct(ThuongHieuDTO model){
+        ThuongHieuDAO brandDAO = (ThuongHieuDAO) DAO;  
+        return brandDAO.isUsing(model);
     }
 }

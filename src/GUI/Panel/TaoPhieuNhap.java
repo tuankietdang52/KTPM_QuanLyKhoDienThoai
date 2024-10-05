@@ -20,6 +20,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import GUI.Component.PanelBorderRadius;
+import GUI.Component.PriceDocumentFilter;
 import GUI.Component.SelectForm;
 import GUI.Dialog.QRCode_Dialog;
 import GUI.Main;
@@ -245,7 +246,7 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
         cbxCauhinh.cbb.addItemListener(this);
         txtDongia = new InputForm("Giá nhập");
         PlainDocument dongia = (PlainDocument) txtDongia.getTxtForm().getDocument();
-        dongia.setDocumentFilter((new NumericDocumentFilter()));
+        dongia.setDocumentFilter((new PriceDocumentFilter(13)));
         String[] arrPtNhap = {"Nhập theo lô", "Nhập từng máy"};
         cbxPtNhap = new SelectForm("Phương thức nhập", arrPtNhap);
         cbxPtNhap.cbb.addItemListener(this);
@@ -431,7 +432,7 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
         
         int masp = Integer.parseInt(txtMaSp.getText());
         int maphienbansp = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
-        int gianhap = Integer.parseInt(txtDongia.getText());
+        long gianhap = Long.parseLong(txtDongia.getText());
         int phuongthucnhap = cbxPtNhap.getSelectedIndex();
         ArrayList<ChiTietSanPhamDTO> ctSP = getChiTietSanPham();
         int soluong = ctSP.size();
@@ -465,19 +466,18 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
         int hinhthuc = cbxPtNhap.getSelectedIndex();
         int phienbansp = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
         ArrayList<ChiTietSanPhamDTO> result = new ArrayList<>();
-        int gianhap = Integer.parseInt(txtDongia.getText());
 
         if (hinhthuc == 1) {
             String[] arrimei = textAreaImei.getText().split("\n");
             for (int i = 0; i < arrimei.length; i++) {
-                result.add(new ChiTietSanPhamDTO(arrimei[i], phienbansp, maphieunhap, 0, 1, gianhap, 0));
+                result.add(new ChiTietSanPhamDTO(arrimei[i], phienbansp, maphieunhap, 0, 1));
             }
         } else {
             long imeibatdau = Long.parseLong(txtMaImeiTheoLo.getText());
             int soluong = Integer.parseInt(txtSoLuongImei.getText());
 
             for (long i = imeibatdau; i < imeibatdau + soluong; i++) {
-                result.add(new ChiTietSanPhamDTO(Long.toString(i), phienbansp, maphieunhap, 0, 1, gianhap, 0));
+                result.add(new ChiTietSanPhamDTO(Long.toString(i), phienbansp, maphieunhap, 0, 1));
             }
         }
         return result;
@@ -591,7 +591,7 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
         this.txtTenSp.setText(spBUS.getByMaSP(pb.getMasp()).getTensp());
         this.cbxCauhinh.setArr(getCauHinhPhienBan(pb.getMasp()));
         this.cbxCauhinh.setSelectedIndex(phienbanBus.getIndexByMaPhienBan(ch, phieu.getMaphienbansp()));
-        this.txtDongia.setText(Integer.toString(phieu.getDongia()));
+        this.txtDongia.setText(Long.toString(phieu.getDongia()));
         setImei(phieu);
     }
 

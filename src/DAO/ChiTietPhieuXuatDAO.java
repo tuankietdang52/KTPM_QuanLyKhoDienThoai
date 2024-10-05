@@ -33,7 +33,7 @@ public class ChiTietPhieuXuatDAO implements ChiTietInterface<ChiTietPhieuDTO> {
                 pst.setInt(3, t.get(i).getSoluong());
                 int soluong = -(t.get(i).getSoluong());
                 int change = PhienBanSanPhamDAO.getInstance().updateSoLuongTon(t.get(i).getMaphienbansp(), soluong);
-                pst.setInt(4, t.get(i).getDongia());
+                pst.setLong(4, t.get(i).getDongia());
                 result = pst.executeUpdate();
                 JDBCUtil.closeConnection(con);
             } catch (SQLException ex) {
@@ -89,7 +89,7 @@ public class ChiTietPhieuXuatDAO implements ChiTietInterface<ChiTietPhieuDTO> {
             while (rs.next()) {
                 int maphieu = rs.getInt("maphieuxuat");
                 int maphienbansp = rs.getInt("maphienbansp");
-                int dongia = rs.getInt("dongia");
+                long dongia = rs.getInt("dongia");
                 int soluong = rs.getInt("soluong");
                 ChiTietPhieuDTO ctphieu = new ChiTietPhieuDTO(maphieu, maphienbansp, soluong, dongia);
                 result.add(ctphieu);

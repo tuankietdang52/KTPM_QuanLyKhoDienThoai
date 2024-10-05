@@ -5,6 +5,8 @@
 package DAO;
 
 import DTO.ThuocTinhSanPham.HeDieuHanhDTO;
+import DTO.ThuocTinhSanPham.XuatXuDTO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,11 +20,12 @@ import java.util.ArrayList;
  *
  * @author 84907
  */
-public class HeDieuHanhDAO implements DAOinterface<HeDieuHanhDTO>{
+public class HeDieuHanhDAO implements DAOinterface<HeDieuHanhDTO> {
 
     public static HeDieuHanhDAO getInstance() {
         return new HeDieuHanhDAO();
     }
+
     @Override
     public int insert(HeDieuHanhDTO t) {
         int result = 0;
@@ -64,7 +67,7 @@ public class HeDieuHanhDAO implements DAOinterface<HeDieuHanhDTO>{
             Connection con = (Connection) JDBCUtil.getConnection();
             String sql = "UPDATE `hedieuhanh` SET `trangthai` = 0 WHERE mahedieuhanh = ?";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setString(1,t);
+            pst.setString(1, t);
             result = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
         } catch (SQLException ex) {
@@ -119,7 +122,8 @@ public class HeDieuHanhDAO implements DAOinterface<HeDieuHanhDTO>{
         int result = -1;
         try {
             Connection con = (Connection) JDBCUtil.getConnection();
-            // String sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'quanlikhohang' AND   TABLE_NAME   = 'hedieuhanh'";
+            // String sql = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE
+            // TABLE_SCHEMA = 'quanlikhohang' AND TABLE_NAME = 'hedieuhanh'";
             String sql = "SELECT MAX(mahedieuhanh) + 1 AS AUTO_INCREMENT FROM hedieuhanh";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs2 = pst.executeQuery(sql);
@@ -137,5 +141,25 @@ public class HeDieuHanhDAO implements DAOinterface<HeDieuHanhDTO>{
         }
         return result;
     }
-    }
 
+    public boolean isUsing(HeDieuHanhDTO model){
+        boolean result = false;
+        int id = model.getMahdh();
+
+        try {
+            Connection con = (Connection) JDBCUtil.getConnection();
+            String sql = "SELECT hedieuhanh " + 
+                         "FROM sanpham " + 
+                         "WHERE hedieuhanh = " + id;
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            result = rs.next();     
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(KhuVucKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        }
+        
+        return result;
+    }
+}

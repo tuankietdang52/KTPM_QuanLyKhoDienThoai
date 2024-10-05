@@ -95,7 +95,7 @@ public class ChiTietSanPhamBUS {
         }
         return result;
     }
-    public ArrayList<ChiTietSanPhamDTO> FilterPBvaAll(String text,int masp, int phienban) {
+    public ArrayList<ChiTietSanPhamDTO> FilterPBvaAll(String text, int masp, int phienban) {
         ArrayList<ChiTietSanPhamDTO> list = this.getAllCTSPbyMasp(masp);
         ArrayList<ChiTietSanPhamDTO> result = new ArrayList<>();
         for (ChiTietSanPhamDTO i : list) {

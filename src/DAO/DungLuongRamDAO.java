@@ -5,6 +5,8 @@
 package DAO;
 
 import DTO.ThuocTinhSanPham.DungLuongRamDTO;
+import DTO.ThuocTinhSanPham.DungLuongRomDTO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,6 +132,27 @@ public class DungLuongRamDAO implements DAOinterface<DungLuongRamDTO> {
         } catch (SQLException ex) {
             Logger.getLogger(DungLuongRamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
+    }
+
+    public boolean isUsing(DungLuongRamDTO model){
+        boolean result = false;
+        int id = model.getMadlram();
+
+        try {
+            Connection con = (Connection) JDBCUtil.getConnection();
+            String sql = "SELECT ram " + 
+                         "FROM phienbansanpham " + 
+                         "WHERE ram = " + id;
+            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            result = rs.next();     
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(KhuVucKhoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        }
+        
         return result;
     }
 }

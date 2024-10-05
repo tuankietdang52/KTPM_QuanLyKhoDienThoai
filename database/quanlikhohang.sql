@@ -45,7 +45,7 @@ CREATE TABLE `ctphieunhap` (
   `maphieunhap` int(11) NOT NULL,
   `maphienbansp` int(11) NOT NULL DEFAULT 0,
   `soluong` int(11) NOT NULL DEFAULT 0,
-  `dongia` int(11) NOT NULL DEFAULT 0,
+  `dongia` bigint(20) NOT NULL DEFAULT 0,
   `hinhthucnhap` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -98,7 +98,7 @@ CREATE TABLE `ctphieuxuat` (
   `maphieuxuat` int(11) NOT NULL,
   `maphienbansp` int(11) NOT NULL DEFAULT 0,
   `soluong` int(11) NOT NULL DEFAULT 0,
-  `dongia` int(11) NOT NULL DEFAULT 0
+  `dongia` bigint(20) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --

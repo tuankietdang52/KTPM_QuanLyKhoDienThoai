@@ -100,7 +100,7 @@ public class XuatXuDialog extends JDialog implements MouseListener {
         scrollTable = new JScrollPane(table);
         scrollTable.setBackground(Color.WHITE);
         tblModel = new DefaultTableModel();
-        String[] header = new String[]{"Mã xuất xứ", "Nơi xuất xứ"};
+        String[] header = new String[] { "Mã xuất xứ", "Nơi xuất xứ" };
         tblModel.setColumnIdentifiers(header);
         table.setModel(tblModel);
         scrollTable.setViewportView(table);
@@ -135,8 +135,8 @@ public class XuatXuDialog extends JDialog implements MouseListener {
     public void loadDataTable(ArrayList<XuatXuDTO> result) {
         tblModel.setRowCount(0);
         for (XuatXuDTO ncc : result) {
-            tblModel.addRow(new Object[]{
-                ncc.getMaxuatxu(), ncc.getTenxuatxu()
+            tblModel.addRow(new Object[] {
+                    ncc.getMaxuatxu(), ncc.getTenxuatxu()
             });
         }
     }
@@ -157,14 +157,13 @@ public class XuatXuDialog extends JDialog implements MouseListener {
                     JOptionPane.showMessageDialog(this, "Xuất xứ đã tồn tại !");
                 }
             }
-        } else if (e.getSource() == del) {
+        }        
+        else if (e.getSource() == del) {
             int index = getRowSelected();
-            if (index != -1) {
-                msBUS.delete(list.get(index));
-                loadDataTable(list);
-                ms.setText("");
-            }
-        } else if (e.getSource() == update) {
+            if (index != -1) deleteModel(index);
+
+        } 
+        else if (e.getSource() == update) {
             int index = getRowSelected();
             if (index != -1) {
                 if (Validation.isEmpty(ms.getText())) {
@@ -186,6 +185,17 @@ public class XuatXuDialog extends JDialog implements MouseListener {
         }
     }
 
+    private void deleteModel(int index) {
+        XuatXuDTO model = list.get(index);
+        if (msBUS.isUsingByProduct(model)){
+            JOptionPane.showMessageDialog(null, "Xuất xứ đang được sử dụng bởi sản phẩm");
+            return;
+        }
+        msBUS.delete(model);
+        loadDataTable(list);
+        ms.setText("");
+    }
+
     public int getRowSelected() {
         int index = table.getSelectedRow();
         if (index == -1) {
@@ -196,22 +206,30 @@ public class XuatXuDialog extends JDialog implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // throw new UnsupportedOperationException("Not supported yet."); // Generated
+        // from
+        // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 
     }
 }

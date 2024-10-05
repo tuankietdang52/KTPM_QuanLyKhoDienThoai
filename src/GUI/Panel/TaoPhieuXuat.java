@@ -23,10 +23,13 @@ import GUI.Component.ButtonCustom;
 import GUI.Component.CustomComboCheck;
 import GUI.Component.InputForm;
 import GUI.Component.Notification;
+import GUI.Component.NumericDocumentFilter;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import GUI.Component.PanelBorderRadius;
+import GUI.Component.PriceDocumentFilter;
 import GUI.Component.SelectForm;
 import GUI.Dialog.ListKhachHang;
 import GUI.Dialog.QRCode_Dialog;
@@ -49,6 +52,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.PlainDocument;
 
 public final class TaoPhieuXuat extends JPanel {
 
@@ -225,6 +229,8 @@ public final class TaoPhieuXuat extends JPanel {
         panlePXGX.setPreferredSize(new Dimension(100, 90));
         cbxPhienBan = new SelectForm("Cấu hình", arrCauhinh);
         txtGiaXuat = new InputForm("Giá xuất");
+        PlainDocument dongia = (PlainDocument) txtGiaXuat.getTxtForm().getDocument();
+        dongia.setDocumentFilter((new PriceDocumentFilter(13)));
         txtSoluongTon = new InputForm("Số lượng tồn");
         txtSoluongTon.setEditable(false);
         panlePXGX.add(cbxPhienBan);
@@ -590,7 +596,7 @@ public final class TaoPhieuXuat extends JPanel {
     public ChiTietPhieuDTO getInfo() {
         int masp = Integer.parseInt(txtMaSp.getText());
         int macauhinh = mapb;
-        int dongia = Integer.parseInt(txtGiaXuat.getText());
+        long dongia = Long.parseLong(txtGiaXuat.getText());
         String[] arrimei = textAreaImei.getText().split("\n");
         int soLuong = getChiTietSp();
         ChiTietPhieuDTO ctpx = new ChiTietPhieuDTO(maphieu, mapb, soLuong, dongia);
@@ -599,11 +605,9 @@ public final class TaoPhieuXuat extends JPanel {
     }
 
     public int getChiTietSp() {
-        int price = Integer.parseInt(txtGiaXuat.getText());
-
         String[] arrimei = textAreaImei.getText().split("\n");
         for (int i = 0; i < arrimei.length; i++) {
-            ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(arrimei[i], mapb, 0, maphieu, 0, 0, price);
+            ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(arrimei[i], mapb, 0, maphieu, 0);
             chitietsanpham.add(ct);
         }
         return arrimei.length;

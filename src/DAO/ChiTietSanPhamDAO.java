@@ -151,11 +151,8 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
 
-                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
-
                 ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
-                    imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang, 
-                    prices.getFirst(), prices.getLast());
+                    imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang);
 
                 result.add(ct);
             }
@@ -181,11 +178,8 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
                 
-                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
-
                 ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
-                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang, 
-                    prices.getFirst(), prices.getLast());
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
 
                 result.add(ct);
             }
@@ -210,11 +204,8 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
                 
-                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
-
                 ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
-                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang, 
-                    prices.getFirst(), prices.getLast());
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
 
                 result.add(ct);
             }
@@ -240,11 +231,8 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
                 
-                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
-
                 ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
-                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang, 
-                    prices.getFirst(), prices.getLast());
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
 
                 result.add(ct);
             }
@@ -299,11 +287,8 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int maphieuxuat = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
 
-                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
-
                 ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
-                    imei, maphienban, mapn, maphieuxuat, tinhtrang, 
-                    prices.getFirst(), prices.getLast());
+                    imei, maphienban, maphieunhap, maphieuxuat, tinhtrang);
                 
                 result.add(ct);
             }
@@ -328,12 +313,9 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
                 int mapn = rs.getInt("maphieunhap");
                 int mapx = rs.getInt("maphieuxuat");
                 int tinhtrang = rs.getInt("tinhtrang");
-                
-                Pair<Integer, Integer> prices = getImportAndExportPrices(con, imei);
 
                 ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(
-                    imei, maphienban, mapn, mapx, tinhtrang, 
-                    prices.getFirst(), prices.getLast());
+                    imei, maphienban, mapn, mapx, tinhtrang);
 
                 result.add(ct);
             }
@@ -358,10 +340,6 @@ public class ChiTietSanPhamDAO implements DAOinterface<ChiTietSanPhamDTO> {
         }
 
         return ans;
-    }
-    
-    private Pair<Integer, Integer> getImportAndExportPrices(Connection con, String imeiCode){
-        return new Pair<Integer,Integer>(getImportPrice(con, imeiCode), getExportPrice(con, imeiCode));
     }
 
     private int getImportPrice(Connection con, String imeiCode){

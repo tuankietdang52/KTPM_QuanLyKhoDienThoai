@@ -16,13 +16,11 @@ public class ChiTietSanPhamDTO {
     private int maphieunhap;
     private int maphieuxuat;
     private int tinhtrang;
-    private int gianhap;
-    private int giaxuat;
 
     public ChiTietSanPhamDTO() {
     }
 
-    public ChiTietSanPhamDTO(String imei, int maphienbansp, int maphieunhap, int maphieuxuat, int tinhtrang, int gianhap, int giaxuat) {
+    public ChiTietSanPhamDTO(String imei, int maphienbansp, int maphieunhap, int maphieuxuat, int tinhtrang) {
         this.imei = imei;
         this.maphienbansp = maphienbansp;
         this.maphieunhap = maphieunhap;
@@ -60,22 +58,6 @@ public class ChiTietSanPhamDTO {
 
     public void setMaphieuxuat(int maphieuxuat) {
         this.maphieuxuat = maphieuxuat;
-    }
-
-    public void setGianhap(int gianhap){
-        this.gianhap = gianhap;
-    }
-
-    public int getGianhap(){
-        return gianhap;
-    }
-
-    public void setGiaxuat(int giaxuat){
-        this.giaxuat = giaxuat;
-    }
-
-    public int getGiaxuat(){
-        return giaxuat;
     }
 
     public int getTinhtrang() {
